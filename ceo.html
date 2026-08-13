@@ -1,0 +1,595 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CEO Executive Portal — HyperNova Technology</title>
+  
+  <!-- Premium Fonts Stack -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@500;700&family=Outfit:wght@400;500;600;700;800;900&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Space+Grotesk:wght@500;600;700;800&display=swap" rel="stylesheet">
+  
+  <!-- CSS Stylesheets -->
+  <link rel="stylesheet" href="assets/css/variables.css">
+  <link rel="stylesheet" href="assets/css/base.css">
+  <link rel="stylesheet" href="assets/css/components.css">
+  <link rel="stylesheet" href="assets/css/dashboard.css">
+  <link rel="stylesheet" href="assets/css/independence-day.css">
+</head>
+<body>
+
+  <div class="dashboard-layout">
+    <!-- Sidebar Navigation -->
+    <aside class="sidebar">
+      <div class="sidebar-brand">
+        <div class="brand-logo">
+          <img src="assets/images/logo.png" alt="HyperNova Technology Logo" style="height: 38px; width: auto; object-fit: contain;">
+        </div>
+      </div>
+
+      <nav class="sidebar-nav">
+        <div class="nav-item active" data-tab="tab-ceo-apps">
+          <svg class="svg-icon" viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline></svg>
+          <span>Applications Desk</span>
+        </div>
+        <div class="nav-item" data-tab="tab-ceo-depts">
+          <svg class="svg-icon" viewBox="0 0 24 24"><path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z"></path></svg>
+          <span>Departments</span>
+        </div>
+        <div class="nav-item" data-tab="tab-ceo-directory">
+          <svg class="svg-icon" viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="9" cy="7" r="4"></circle><path d="M23 21v-2a4 4 0 0 0-3-3.87"></path><path d="M16 3.13a4 4 0 0 1 0 7.75"></path></svg>
+          <span>Collaborator Directory</span>
+        </div>
+        <div class="nav-item" data-tab="tab-ceo-tasks">
+          <svg class="svg-icon" viewBox="0 0 24 24"><path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2"></path><rect x="8" y="2" width="8" height="4" rx="1" ry="1"></rect><path d="M9 14l2 2 4-4"></path></svg>
+          <span>Task & Work Desk</span>
+        </div>
+        <div class="nav-item" data-tab="tab-ceo-notice">
+          <svg class="svg-icon" viewBox="0 0 24 24"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"></path><path d="M13.73 21a2 2 0 0 1-3.46 0"></path></svg>
+          <span>Issue Notice</span>
+        </div>
+        <div class="nav-item" data-tab="tab-ceo-profile">
+          <svg class="svg-icon" viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"></circle><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"></path></svg>
+          <span>Account Settings</span>
+        </div>
+      </nav>
+
+      <div class="sidebar-user">
+        <div class="flex items-center gap-2">
+          <div class="user-avatar" style="background: linear-gradient(135deg, var(--success), var(--primary));">IP</div>
+          <div class="user-info">
+            <span class="user-name">Ishan Pandit</span>
+            <span class="user-role">Chief Executive Officer</span>
+          </div>
+        </div>
+        <button class="btn btn-secondary btn-sm" id="btn-ceo-logout" title="Sign Out">
+          <svg class="svg-icon" viewBox="0 0 24 24" style="width:14px; height:14px;"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"></path><polyline points="16 17 21 12 16 7"></polyline><line x1="21" y1="12" x2="9" y2="12"></line></svg>
+        </button>
+      </div>
+    </aside>
+
+    <!-- Main Content Area -->
+    <main class="dashboard-main">
+      <header class="top-bar">
+        <div>
+          <h2>CEO Executive Desk</h2>
+          <p>Review candidate applications, manage organizational departments, and direct work tasks.</p>
+        </div>
+        <div>
+          <button class="btn btn-primary btn-sm" id="btn-open-announcement-modal">📢 Broadcast CEO Announcement</button>
+        </div>
+      </header>
+
+      <!-- Metric Cards Grid -->
+      <div class="grid grid-cols-4 gap-4" style="margin-bottom: 2rem;">
+        <div class="metric-card">
+          <div class="metric-title">TOTAL APPLICATIONS</div>
+          <div class="metric-value" id="m-total-apps">0</div>
+          <div class="metric-subtitle">Submissions across all roles</div>
+        </div>
+        <div class="metric-card">
+          <div class="metric-title">PENDING REVIEW</div>
+          <div class="metric-value" id="m-pending-apps" style="color: var(--warning);">0</div>
+          <div class="metric-subtitle">Awaiting CEO decision</div>
+        </div>
+        <div class="metric-card">
+          <div class="metric-title">APPROVED MEMBERS</div>
+          <div class="metric-value" id="m-approved-apps" style="color: var(--success);">0</div>
+          <div class="metric-subtitle">Active team collaborators</div>
+        </div>
+        <div class="metric-card">
+          <div class="metric-title">ACTIVE DEPARTMENTS</div>
+          <div class="metric-value" id="m-active-depts" style="color: var(--accent-cyan);">0</div>
+          <div class="metric-subtitle">Operational divisions</div>
+        </div>
+      </div>
+
+      <!-- TAB 1: APPLICATIONS DESK -->
+      <section class="tab-content active" id="tab-ceo-apps">
+        <div class="glass-card">
+          <div class="flex justify-between items-center" style="margin-bottom: 1.5rem;">
+            <h3>Applicant Review Table</h3>
+            <span class="badge badge-role">Executive Decision Panel</span>
+          </div>
+
+          <!-- Filter Controls -->
+          <div class="filter-bar">
+            <input type="text" class="form-control" id="search-apps" placeholder="Search applicant name, email, or ID..." style="max-width: 320px;">
+            <select class="form-control" id="filter-type" style="max-width: 200px;">
+              <option value="all">All Application Types</option>
+              <option value="volunteer_collaborator">Volunteer Collaborators</option>
+              <option value="collaborator">External Research Partners</option>
+            </select>
+            <select class="form-control" id="filter-status" style="max-width: 200px;">
+              <option value="all">All Statuses</option>
+              <option value="Pending" selected>Pending Review</option>
+              <option value="Approved">Approved</option>
+              <option value="Rejected">Rejected</option>
+              <option value="Under Review">Info Requested</option>
+            </select>
+          </div>
+
+          <!-- Applications Table -->
+          <div class="table-responsive">
+            <table class="custom-table">
+              <thead>
+                <tr>
+                  <th>App ID</th>
+                  <th>Candidate Name</th>
+                  <th>Email</th>
+                  <th>Target Role / Type</th>
+                  <th>Submission Date</th>
+                  <th>Status</th>
+                  <th>Action</th>
+                </tr>
+              </thead>
+              <tbody id="ceo-apps-tbody">
+                <!-- Dynamically populated -->
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </section>
+
+      <!-- TAB 2: ORGANIZATIONAL DEPARTMENTS -->
+      <section class="tab-content" id="tab-ceo-depts">
+        <div class="glass-card" style="margin-bottom: 2rem;">
+          <div class="flex justify-between items-center" style="margin-bottom: 1.5rem;">
+            <div>
+              <h3>Enterprise Departments Management</h3>
+              <p>Create organizational divisions, assign Department Heads, or bulk import via Excel.</p>
+            </div>
+            <div class="flex gap-2">
+              <button class="btn btn-secondary btn-sm" id="btn-download-excel-template">Download Excel Template</button>
+              <button class="btn btn-secondary btn-sm" id="btn-import-excel-depts">Import Excel / CSV</button>
+              <input type="file" id="input-excel-import" accept=".csv, .xlsx, .xls" style="display: none;">
+              <button class="btn btn-primary btn-sm" id="btn-open-create-dept" onclick="openCreateDeptModal()">+ Create Department</button>
+            </div>
+          </div>
+
+          <div class="grid grid-cols-2 gap-4" id="ceo-depts-container">
+            <!-- Dynamically populated department cards -->
+          </div>
+        </div>
+      </section>
+
+      <!-- TAB 3: COLLABORATOR DIRECTORY -->
+      <section class="tab-content" id="tab-ceo-directory">
+        <div class="glass-card">
+          <div class="flex justify-between items-center" style="margin-bottom: 1.5rem;">
+            <h3>Approved Collaborators Roster</h3>
+            <div class="flex gap-2">
+              <button class="btn btn-secondary btn-sm active" id="btn-dir-volunteers">Volunteer Collaborators</button>
+              <button class="btn btn-secondary btn-sm" id="btn-dir-external">External Research Partners</button>
+            </div>
+          </div>
+
+          <div class="table-responsive">
+            <table class="custom-table">
+              <thead>
+                <tr>
+                  <th>Candidate Name</th>
+                  <th>Security Email</th>
+                  <th>Assigned Department</th>
+                  <th>Approval Date</th>
+                  <th>Status</th>
+                </tr>
+              </thead>
+              <tbody id="directory-tbody">
+                <!-- Dynamically populated -->
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </section>
+
+      <!-- TAB 4: TASK & WORK ASSIGNMENTS DESK -->
+      <section class="tab-content" id="tab-ceo-tasks">
+        <div class="glass-card">
+          <div class="flex justify-between items-center" style="margin-bottom: 1.5rem;">
+            <div>
+              <h3>Executive Work Assignments & Task Desk</h3>
+              <p>Assign work deliverables and milestones to collaborators and Department Heads.</p>
+            </div>
+            <button class="btn btn-primary btn-sm" id="btn-open-create-task">+ Assign Work Task</button>
+          </div>
+
+          <!-- Filter Controls -->
+          <div class="filter-bar">
+            <input type="text" class="form-control" id="search-tasks" placeholder="Search task title, assignee, or ID..." style="max-width: 320px;">
+            <select class="form-control" id="filter-task-status" style="max-width: 200px;">
+              <option value="all">All Task Statuses</option>
+              <option value="Assigned">Assigned</option>
+              <option value="In Progress">In Progress</option>
+              <option value="Under Review">Under Review</option>
+              <option value="Completed">Completed</option>
+            </select>
+            <select class="form-control" id="filter-task-priority" style="max-width: 200px;">
+              <option value="all">All Priorities</option>
+              <option value="Urgent">Urgent</option>
+              <option value="High">High</option>
+              <option value="Medium">Medium</option>
+              <option value="Low">Low</option>
+            </select>
+          </div>
+
+          <!-- Tasks Table -->
+          <div class="table-responsive">
+            <table class="custom-table">
+              <thead>
+                <tr>
+                  <th>Task ID</th>
+                  <th>Title & Deliverables</th>
+                  <th>Assigned To</th>
+                  <th>Priority</th>
+                  <th>Deadline</th>
+                  <th>Status</th>
+                  <th>Action</th>
+                </tr>
+              </thead>
+              <tbody id="ceo-tasks-tbody">
+                <!-- Dynamically populated -->
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </section>
+
+      <!-- TAB 5: ISSUE NOTICE DESK -->
+      <section class="tab-content" id="tab-ceo-notice">
+        <div class="flex flex-col gap-6">
+          <div class="glass-card">
+            <h3>📢 Draft & Broadcast Official Executive Notice</h3>
+            <p style="margin-bottom: 1.25rem; font-size: 0.85rem; color: var(--text-muted);">Broadcast official CEO directives, policy announcements, and executive notices across all portals.</p>
+            
+            <form id="form-ceo-issue-notice" style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem;">
+              <div class="form-group" style="grid-column: span 2;">
+                <label class="form-label">Notice Title <span class="required">*</span></label>
+                <input type="text" class="form-control" id="ceo-notice-title" placeholder="e.g. Executive Policy Directive on Q3 Milestones" required>
+              </div>
+
+              <div class="form-group">
+                <label class="form-label">Broadcast Category</label>
+                <select class="form-control" id="ceo-notice-category">
+                  <option value="Executive Broadcast" selected>Executive Broadcast</option>
+                  <option value="Policy Directive">Policy Directive</option>
+                  <option value="Project Announcement">Project Announcement</option>
+                  <option value="Urgent Decision">Urgent Decision</option>
+                  <option value="General Announcement">General Announcement</option>
+                </select>
+              </div>
+
+              <div class="form-group">
+                <label class="form-label">Priority Level</label>
+                <select class="form-control" id="ceo-notice-priority">
+                  <option value="Normal">Normal</option>
+                  <option value="High" selected>High Priority</option>
+                  <option value="Urgent Broadcast">Urgent Broadcast</option>
+                </select>
+              </div>
+
+              <div class="form-group" style="grid-column: span 2;">
+                <label class="form-label">Notice Content / Executive Message <span class="required">*</span></label>
+                <textarea class="form-control" id="ceo-notice-content" placeholder="Detail official directive message for team members..." required style="min-height: 110px;"></textarea>
+              </div>
+
+              <div style="grid-column: span 2; display: flex; justify-content: flex-end;">
+                <button type="submit" class="btn btn-primary" style="background: linear-gradient(135deg, var(--primary) 0%, var(--accent-purple) 100%);">Publish & Broadcast Executive Notice</button>
+              </div>
+            </form>
+          </div>
+
+          <!-- History Desk -->
+          <div class="glass-card">
+            <h3>Issued Official Notices History</h3>
+            <p style="margin-bottom: 1.25rem; font-size: 0.85rem; color: var(--text-muted);">Manage previously broadcasted executive notices and retract obsolete broadcasts.</p>
+            <div class="table-responsive">
+              <table class="custom-table">
+                <thead>
+                  <tr>
+                    <th>Notice ID</th>
+                    <th>Date</th>
+                    <th>Title</th>
+                    <th>Category</th>
+                    <th>Priority</th>
+                    <th>Author</th>
+                    <th>Action</th>
+                  </tr>
+                </thead>
+                <tbody id="ceo-notices-tbody">
+                  <!-- Dynamically populated -->
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- TAB 6: ACCOUNT & SECURITY SETTINGS -->
+      <section class="tab-content" id="tab-ceo-profile">
+        <div class="grid grid-cols-2 gap-6">
+          <div class="glass-card">
+            <h3>CEO Profile Settings</h3>
+            <p style="margin-bottom: 1.5rem;">Update your executive profile picture link and full name.</p>
+            <form id="form-ceo-profile-edit">
+              <div class="form-group">
+                <label class="form-label">Full Name</label>
+                <input type="text" class="form-control" id="ceo-edit-name" value="Ishan Pandit" required>
+              </div>
+              <div class="form-group">
+                <label class="form-label">Profile Picture URL (Image Link)</label>
+                <input type="url" class="form-control" id="ceo-edit-avatar-url" placeholder="https://example.com/avatar.jpg">
+              </div>
+              <div class="form-group">
+                <label class="form-label">Security Email</label>
+                <input type="email" class="form-control" id="ceo-edit-email" value="ceo@hypernovatech.in" readonly>
+              </div>
+              <button type="submit" class="btn btn-primary" style="margin-top: 1rem;">Save Profile Settings</button>
+            </form>
+          </div>
+
+          <div class="glass-card">
+            <h3>Change Access Cipher (Password)</h3>
+            <p style="margin-bottom: 1.5rem;">Update your CEO access cipher password credentials.</p>
+            <form id="form-ceo-password-change">
+              <div class="form-group">
+                <label class="form-label">Current Access Cipher <span class="required">*</span></label>
+                <input type="password" class="form-control" id="ceo-pw-current" placeholder="Enter current password" required>
+              </div>
+              <div class="form-group">
+                <label class="form-label">New Access Cipher <span class="required">*</span></label>
+                <input type="password" class="form-control" id="ceo-pw-new" placeholder="Minimum 6 characters" required>
+              </div>
+              <div class="form-group">
+                <label class="form-label">Confirm New Access Cipher <span class="required">*</span></label>
+                <input type="password" class="form-control" id="ceo-pw-confirm" placeholder="Re-enter new password" required>
+              </div>
+              <button type="submit" class="btn btn-primary" style="margin-top: 1rem;">Update Password</button>
+            </form>
+          </div>
+        </div>
+      </section>
+
+    </main>
+  </div>
+
+  <!-- MODAL: APPLICATION DETAIL & PDF INSPECTOR -->
+  <div class="modal-overlay" id="modal-app-inspector">
+    <div class="modal-card" style="max-width: 850px;">
+      <div class="modal-header">
+        <h3 id="inspector-app-title">Application Detail & Document Review</h3>
+        <button class="modal-close-btn" onclick="closeModal('modal-app-inspector')">&times;</button>
+      </div>
+
+      <div class="grid grid-cols-2 gap-6" style="margin-bottom: 1.5rem;">
+        <div>
+          <h4>Applicant Profile</h4>
+          <div style="font-size: 0.875rem; margin-top: 0.5rem;" class="flex flex-col gap-1">
+            <div><strong>Name:</strong> <span id="insp-name">N/A</span></div>
+            <div><strong>Email:</strong> <span id="insp-email">N/A</span></div>
+            <div><strong>Phone:</strong> <span id="insp-phone">N/A</span></div>
+            <div><strong>GitHub:</strong> <a href="#" id="insp-github-link" target="_blank">View GitHub</a></div>
+            <div><strong>LinkedIn:</strong> <a href="#" id="insp-linkedin-link" target="_blank">View LinkedIn</a></div>
+            <div><strong>Resume / CV:</strong> <a href="#" id="insp-resume-link" target="_blank">View Resume</a></div>
+            <div><strong>Skills:</strong> <span id="insp-skills">N/A</span></div>
+            <div><strong>Dept Rationale:</strong> <span id="insp-dept-reason" style="font-style:italic; color:var(--text-muted);">N/A</span></div>
+          </div>
+        </div>
+
+        <div>
+          <h4>Executive Review & Decision Controls</h4>
+          <div class="form-group" id="insp-dept-assign-group" style="margin-top: 0.5rem;">
+            <label class="form-label">Assign Department (Volunteer Collaborators)</label>
+            <select class="form-control" id="insp-dept-select">
+              <!-- Dynamically populated -->
+            </select>
+          </div>
+          <div class="form-group">
+            <label class="form-label">CEO Executive Note / Decision Rationale</label>
+            <textarea class="form-control" id="insp-ceo-note" placeholder="Note for applicant or decision rationale..."></textarea>
+          </div>
+
+          <div class="form-group" style="margin-top:0.75rem;">
+            <label class="form-label">CEO Executive E-Signature Pad <span class="required">*</span></label>
+            <div style="border: 1px solid var(--accent-cyan); border-radius: var(--radius-sm); overflow: hidden; background: #0b101c;">
+              <canvas id="canvas-ceo-signature" height="120" style="width: 100%; cursor: crosshair; touch-action: none; display: block;"></canvas>
+            </div>
+            <div class="flex justify-between items-center" style="margin-top: 0.35rem;">
+              <span style="font-size:0.75rem; color:var(--text-dim);">Draw signature to execute approval stamp.</span>
+              <button type="button" class="btn btn-secondary btn-sm" id="btn-clear-ceo-sig" style="padding:0.2rem 0.5rem; font-size:0.75rem;">Clear Signature</button>
+            </div>
+          </div>
+          <div class="grid grid-cols-2 gap-2" style="margin-top: 1rem;">
+            <button class="btn btn-success btn-sm" id="btn-insp-approve">Approve Candidate</button>
+            <button class="btn btn-danger btn-sm" id="btn-insp-reject">Reject Application</button>
+            <button class="btn btn-secondary btn-sm" id="btn-insp-request-info">Request Info</button>
+            <button class="btn btn-secondary btn-sm" id="btn-insp-reset-pending">Reset to Pending</button>
+            <button class="btn btn-danger btn-sm" id="btn-insp-delete" style="grid-column: span 2; background: #dc2626;">Purge / Delete Application Record</button>
+          </div>
+        </div>
+      </div>
+
+      <div class="flex items-center justify-between" style="margin-bottom: 0.75rem;">
+        <h4>Application PDF Document (HN-2026-XXXX)</h4>
+        <button class="btn btn-accent btn-sm" id="btn-open-pdf-external">
+          <svg class="svg-icon" viewBox="0 0 24 24"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path><polyline points="15 3 21 3 21 9"></polyline><line x1="10" y1="14" x2="21" y2="3"></line></svg>
+          <span>Open PDF in New Window / Download</span>
+        </button>
+      </div>
+      <div class="pdf-preview-box" style="margin-top: 0.5rem; height: 350px;">
+        <iframe id="insp-pdf-iframe" title="PDF Document Viewer" style="width: 100%; height: 100%; border: none; border-radius: var(--radius-sm);"></iframe>
+      </div>
+    </div>
+  </div>
+
+  <!-- MODAL: CREATE / EDIT DEPARTMENT -->
+  <div class="modal-overlay" id="modal-dept-editor">
+    <div class="modal-card">
+      <div class="modal-header">
+        <h3 id="dept-modal-title">Create New Department</h3>
+        <button class="modal-close-btn" onclick="closeModal('modal-dept-editor')">&times;</button>
+      </div>
+      <form id="form-dept-editor">
+        <input type="hidden" id="dept-edit-id" value="">
+        <div class="form-group">
+          <label class="form-label">Department Name <span class="required">*</span></label>
+          <input type="text" class="form-control" id="dept-input-name" placeholder="e.g. Quantum Computing Lab" required>
+        </div>
+        <div class="form-group">
+          <label class="form-label">Description <span class="required">*</span></label>
+          <textarea class="form-control" id="dept-input-desc" placeholder="Scope and mission of this department..." required></textarea>
+        </div>
+        <button type="submit" class="btn btn-primary" style="width: 100%; margin-top: 1rem;">Save Department</button>
+      </form>
+    </div>
+  </div>
+
+  <!-- MODAL: CREATE / EDIT WORK TASK -->
+  <div class="modal-overlay" id="modal-task-editor">
+    <div class="modal-card" style="max-width: 600px;">
+      <div class="modal-header">
+        <h3 id="task-modal-title">Assign New Work Task</h3>
+        <button class="modal-close-btn" onclick="closeModal('modal-task-editor')">&times;</button>
+      </div>
+      <form id="form-task-editor">
+        <input type="hidden" id="task-edit-id" value="">
+        <div class="form-group">
+          <label class="form-label">Task Title <span class="required">*</span></label>
+          <input type="text" class="form-control" id="task-input-title" placeholder="e.g. Develop AI Inference Microservice" required>
+        </div>
+        <div class="form-group">
+          <label class="form-label">Assignee (Collaborator or Department Head) <span class="required">*</span></label>
+          <select class="form-control" id="task-input-assignee" required>
+            <!-- Dynamically populated from approved applications -->
+          </select>
+        </div>
+        <div class="grid grid-cols-2 gap-4">
+          <div class="form-group">
+            <label class="form-label">Priority</label>
+            <select class="form-control" id="task-input-priority">
+              <option value="Low">Low</option>
+              <option value="Medium" selected>Medium</option>
+              <option value="High">High</option>
+              <option value="Urgent">Urgent</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label class="form-label">Deadline / Due Date <span class="required">*</span></label>
+            <input type="date" class="form-control" id="task-input-deadline" required>
+          </div>
+        </div>
+        <div class="form-group">
+          <label class="form-label">Work Description & Deliverables <span class="required">*</span></label>
+          <textarea class="form-control" id="task-input-desc" placeholder="Detail the objectives, codebase repositories, and expected deliverables..." required></textarea>
+        </div>
+        <button type="submit" class="btn btn-primary" style="width: 100%; margin-top: 1rem;">Assign Work Task</button>
+      </form>
+    </div>
+  </div>
+
+  <!-- MODAL: APPOINT DEPARTMENT HEAD -->
+  <div class="modal-overlay" id="modal-dept-head-assign">
+    <div class="modal-card">
+      <div class="modal-header">
+        <h3 id="dept-head-modal-title">Appoint Department Head</h3>
+        <button class="modal-close-btn" onclick="closeModal('modal-dept-head-assign')">&times;</button>
+      </div>
+      <form id="form-dept-head-editor">
+        <input type="hidden" id="dept-head-target-id" value="">
+        <div class="form-group">
+          <label class="form-label">Department Name</label>
+          <input type="text" class="form-control" id="dept-head-target-name" readonly>
+        </div>
+        <div class="form-group">
+          <label class="form-label">Select Collaborator as Head <span class="required">*</span></label>
+          <select class="form-control" id="dept-head-select-collaborator" required>
+            <!-- Dynamically populated from approved collaborators -->
+          </select>
+        </div>
+        <button type="submit" class="btn btn-primary" style="width: 100%; margin-top: 1rem;">Appoint as Department Head</button>
+      </form>
+    </div>
+  </div>
+
+  <!-- MODAL: PUBLISH CEO ANNOUNCEMENT -->
+  <div class="modal-overlay" id="modal-ceo-announcement">
+    <div class="modal-card">
+      <div class="modal-header">
+        <h3>Broadcast CEO Corner Announcement</h3>
+        <button class="modal-close-btn" onclick="closeModal('modal-ceo-announcement')">&times;</button>
+      </div>
+      <form id="form-publish-announcement">
+        <div class="form-group">
+          <label class="form-label">Announcement Title <span class="required">*</span></label>
+          <input type="text" class="form-control" id="anc-title" placeholder="e.g. Q3 Innovation Sprint Launch" required>
+        </div>
+        <div class="form-group">
+          <label class="form-label">Broadcast Category</label>
+          <select class="form-control" id="anc-category">
+            <option value="Executive Broadcast" selected>Executive Broadcast</option>
+            <option value="Department Update">Department Update</option>
+            <option value="Weekly Innovation Challenge">Weekly Innovation Challenge</option>
+            <option value="Urgent Policy Notice">Urgent Policy Notice</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label class="form-label">Priority Level</label>
+          <select class="form-control" id="anc-priority">
+            <option value="Normal">Normal</option>
+            <option value="High" selected>High</option>
+            <option value="Urgent">Urgent Broadcast</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label class="form-label">Announcement Content <span class="required">*</span></label>
+          <textarea class="form-control" id="anc-content" placeholder="Enter executive broadcast message for all HyperNova members..." required style="min-height: 120px;"></textarea>
+        </div>
+        <button type="submit" class="btn btn-primary" style="width: 100%;">Broadcast Announcement</button>
+      </form>
+    </div>
+  </div>
+
+  <!-- CDN Firebase Compat Scripts -->
+  <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-auth-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-storage-compat.js"></script>
+
+  <!-- jsPDF & SheetJS CDN -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/xlsx@0.18.5/dist/xlsx.full.min.js"></script>
+
+  <!-- Core App Scripts -->
+  <script src="assets/js/firebase-config.js"></script>
+  <script src="assets/js/store.js"></script>
+  <script src="assets/js/theme.js"></script>
+  <script src="assets/js/notifications.js"></script>
+  <script src="assets/js/audit.js"></script>
+  <script src="assets/js/auth.js"></script>
+  <script src="assets/js/signature.js"></script>
+  <script src="assets/js/pdf-gen.js"></script>
+  <script src="assets/js/maintenance.js"></script>
+  <script src="assets/js/ceo.js"></script>
+</body>
+</html>

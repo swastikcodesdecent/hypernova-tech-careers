@@ -1,0 +1,358 @@
+/* ==========================================================================
+   HyperNova Technology — 15th August Independence Day Celebration System
+   Fixed Alignment & Zero-Gap Layout Engine
+   ========================================================================== */
+
+:root {
+  --id-saffron: #FF9933;
+  --id-saffron-glow: rgba(255, 153, 51, 0.45);
+  --id-white: #FFFFFF;
+  --id-green: #138808;
+  --id-green-glow: rgba(19, 136, 8, 0.45);
+  --id-navy: #000080;
+  --id-chakra: #38bdf8;
+  --id-banner-height: 42px;
+  --id-tricolor-bar: linear-gradient(90deg, #FF9933 0%, #FF9933 33.3%, #FFFFFF 33.3%, #FFFFFF 66.6%, #138808 66.6%, #138808 100%);
+  --id-saffron-btn: linear-gradient(135deg, #FF9933 0%, #E67E22 50%, #138808 100%);
+}
+
+/* Base Body Adjustments */
+body.theme-independence-day {
+  background-color: #050811 !important;
+  color: #FFFFFF;
+  margin: 0;
+  padding: 0 !important;
+  overflow-x: hidden;
+}
+
+/* --------------------------------------------------------------------------
+   Top Celebration Banner
+   -------------------------------------------------------------------------- */
+.id-header-banner {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: var(--id-banner-height);
+  background: rgba(10, 15, 28, 0.96);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border-bottom: 2px solid transparent;
+  border-image: var(--id-tricolor-bar) 1;
+  color: #FFFFFF;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.75rem;
+  font-family: var(--font-heading);
+  font-size: 0.825rem;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  z-index: 10000;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.6);
+  animation: idBannerSlideDown 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+@keyframes idBannerSlideDown {
+  from { transform: translateY(-100%); opacity: 0; }
+  to { transform: translateY(0); opacity: 1; }
+}
+
+.id-chakra-icon {
+  width: 20px;
+  height: 20px;
+  animation: idChakraSpin 20s linear infinite;
+  filter: drop-shadow(0 0 6px rgba(56, 189, 248, 0.8));
+  flex-shrink: 0;
+}
+
+@keyframes idChakraSpin {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+
+.id-badge-tag {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  padding: 2px 10px;
+  background: rgba(255, 153, 51, 0.18);
+  border: 1px solid rgba(255, 153, 51, 0.45);
+  border-radius: var(--radius-full);
+  color: #FF9933;
+  font-size: 0.725rem;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+}
+
+.id-tricolor-text {
+  background: linear-gradient(90deg, #FF9933 0%, #FFFFFF 50%, #138808 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  font-weight: 800;
+}
+
+/* --------------------------------------------------------------------------
+   Sidebar & Main Dashboard Layout Strict Positioning (FIXED SIDEBAR)
+   -------------------------------------------------------------------------- */
+
+body.theme-independence-day .dashboard-layout {
+  display: flex !important;
+  min-height: 100vh !important;
+  position: relative;
+  z-index: 10;
+}
+
+/* Strict Fixed Sidebar Rules */
+body.theme-independence-day .sidebar {
+  position: fixed !important;
+  top: var(--id-banner-height) !important;
+  left: 0 !important;
+  width: 260px !important;
+  height: calc(100vh - var(--id-banner-height)) !important;
+  bottom: 0 !important;
+  z-index: 900 !important;
+  background: rgba(10, 15, 28, 0.96) !important;
+  border-right: 1px solid rgba(255, 153, 51, 0.28) !important;
+  box-shadow: 4px 0 25px rgba(0, 0, 0, 0.5) !important;
+  padding: 1.5rem 1rem !important;
+  display: flex !important;
+  flex-direction: column !important;
+  backdrop-filter: blur(12px) !important;
+  -webkit-backdrop-filter: blur(12px) !important;
+  overflow-y: auto !important;
+}
+
+body.theme-independence-day .sidebar-brand {
+  margin-bottom: 2rem !important;
+  padding: 0 0.5rem !important;
+}
+
+body.theme-independence-day .sidebar-brand img {
+  filter: drop-shadow(0 0 10px rgba(255, 153, 51, 0.5));
+}
+
+body.theme-independence-day .nav-item.active {
+  background: rgba(255, 153, 51, 0.15) !important;
+  border-color: rgba(255, 153, 51, 0.4) !important;
+  color: #FF9933 !important;
+}
+
+body.theme-independence-day .nav-item:hover {
+  background: rgba(255, 255, 255, 0.08) !important;
+}
+
+/* Main Content Area Alignment */
+body.theme-independence-day .dashboard-main {
+  margin-left: 260px !important;
+  margin-top: var(--id-banner-height) !important;
+  min-height: calc(100vh - var(--id-banner-height)) !important;
+  max-width: calc(100vw - 260px) !important;
+  padding: 2rem !important;
+  flex-grow: 1 !important;
+}
+
+/* Auth / Landing page card top margin */
+body.theme-independence-day .cyber-auth-card,
+body.theme-independence-day .portal-top-logo {
+  margin-top: calc(var(--id-banner-height) + 1.5rem) !important;
+}
+
+/* --------------------------------------------------------------------------
+   Subtle Background Waving Flag Canvas & Ashoka Chakra
+   -------------------------------------------------------------------------- */
+.id-flag-bg-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  pointer-events: none;
+  z-index: 0;
+  overflow: hidden;
+  opacity: 0;
+  transition: opacity 0.5s ease;
+  filter: blur(18px) !important;
+  -webkit-filter: blur(18px) !important;
+  transform: scale(1.08) !important;
+}
+
+body.theme-independence-day .id-flag-bg-overlay {
+  opacity: 1;
+}
+
+.id-flag-canvas {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+}
+
+.id-bg-chakra-wheel {
+  position: absolute;
+  top: 70px;
+  right: 20px;
+  width: min(340px, 28vw);
+  height: min(340px, 28vw);
+  pointer-events: none;
+  animation: idChakraSpin 50s linear infinite;
+  opacity: 0.12;
+  filter: drop-shadow(0 0 20px rgba(56, 189, 248, 0.3));
+}
+
+/* --------------------------------------------------------------------------
+   Glass Cards & UI Accents (High-Contrast Glassmorphism with Heavy Blur)
+   -------------------------------------------------------------------------- */
+body.theme-independence-day .glass-card,
+body.theme-independence-day .cyber-auth-card {
+  background: rgba(11, 17, 32, 0.96) !important;
+  backdrop-filter: blur(25px) !important;
+  -webkit-backdrop-filter: blur(25px) !important;
+  border: 1.5px solid rgba(255, 153, 51, 0.45) !important;
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.85), 0 0 35px rgba(255, 153, 51, 0.2) !important;
+  position: relative !important;
+  overflow: hidden !important; /* Perfectly clips tricolor top border inside rounded corners */
+}
+
+body.theme-independence-day .glass-card::before,
+body.theme-independence-day .cyber-auth-card::before {
+  content: '' !important;
+  position: absolute !important;
+  top: 0 !important;
+  left: 0 !important;
+  right: 0 !important;
+  height: 4px !important;
+  background: linear-gradient(90deg, #FF9933 0%, #FF9933 33.33%, #FFFFFF 33.33%, #FFFFFF 66.66%, #138808 66.66%, #138808 100%) !important;
+  box-shadow: 0 2px 14px rgba(255, 153, 51, 0.8), 0 2px 14px rgba(19, 136, 8, 0.8) !important;
+  z-index: 10 !important;
+  pointer-events: none !important;
+}
+
+body.theme-independence-day .form-label {
+  color: #f8fafc !important;
+  font-weight: 700 !important;
+  font-size: 0.8rem !important;
+  letter-spacing: 0.08em !important;
+}
+
+body.theme-independence-day .form-control {
+  background: #1e293b !important;
+  border: 1.5px solid rgba(255, 255, 255, 0.22) !important;
+  color: #ffffff !important;
+  font-size: 0.95rem !important;
+  font-weight: 600 !important;
+  box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.3) !important;
+}
+
+body.theme-independence-day .form-control::placeholder {
+  color: #94a3b8 !important;
+  opacity: 1 !important;
+}
+
+body.theme-independence-day .form-control:focus {
+  border-color: #FF9933 !important;
+  background: #0f172a !important;
+  box-shadow: 0 0 14px rgba(255, 153, 51, 0.35) !important;
+}
+
+body.theme-independence-day .role-segmented-switcher {
+  background: #0f172a !important;
+  border: 1px solid rgba(255, 153, 51, 0.35) !important;
+  padding: 0.35rem !important;
+}
+
+body.theme-independence-day .role-switcher-btn {
+  color: #e2e8f0 !important;
+  font-weight: 700 !important;
+  background: rgba(30, 41, 59, 0.6) !important;
+}
+
+body.theme-independence-day .role-switcher-btn.active {
+  background: linear-gradient(135deg, #FF9933 0%, #E67E22 50%, #138808 100%) !important;
+  border: 1px solid rgba(255, 153, 51, 0.7) !important;
+  color: #ffffff !important;
+  font-weight: 800 !important;
+  box-shadow: 0 4px 15px rgba(255, 153, 51, 0.4) !important;
+}
+
+body.theme-independence-day .btn-primary {
+  background: linear-gradient(135deg, #FF9933 0%, #E67E22 50%, #138808 100%) !important;
+  border: none !important;
+  color: #ffffff !important;
+  box-shadow: 0 6px 25px rgba(255, 153, 51, 0.45) !important;
+  font-weight: 800 !important;
+  font-size: 0.95rem !important;
+  letter-spacing: 0.05em !important;
+  transition: all 0.25s ease;
+}
+
+body.theme-independence-day .btn-primary:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 28px rgba(19, 136, 8, 0.6) !important;
+  filter: brightness(1.15);
+}
+
+body.theme-independence-day .badge-pending,
+body.theme-independence-day .badge-role {
+  background: rgba(255, 153, 51, 0.15);
+  color: #FF9933;
+  border-color: rgba(255, 153, 51, 0.4);
+}
+
+/* --------------------------------------------------------------------------
+   System Maintenance Mode Flag Theme Integration
+   -------------------------------------------------------------------------- */
+body.theme-independence-day .id-flag-bg-overlay {
+  z-index: 0 !important; /* Default background layer for dashboard pages */
+  opacity: 1 !important;
+}
+
+/* Elevates waving flag canvas right behind maintenance overlay screen ONLY when maintenance mode overlay is active */
+body.theme-independence-day:has(#id-maintenance-overlay) .id-flag-bg-overlay,
+body.theme-independence-day #id-maintenance-overlay ~ #id-flag-overlay,
+body.theme-independence-day #id-flag-overlay {
+  z-index: 999998 !important;
+}
+
+body.theme-independence-day #id-maintenance-overlay {
+  background: rgba(6, 9, 19, 0.72) !important; /* Translucent dark backdrop so flag canvas shows on maintenance screen */
+  backdrop-filter: blur(10px) !important;
+  -webkit-backdrop-filter: blur(10px) !important;
+}
+
+body.theme-independence-day #id-maintenance-overlay .id-bg-chakra-wheel {
+  opacity: 0.45 !important; /* Bright spinning Ashoka Chakra wheel on maintenance screen */
+}
+
+body.theme-independence-day #id-maintenance-overlay .glass-card {
+  border: 1.5px solid rgba(255, 153, 51, 0.5) !important;
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.75), 0 0 35px rgba(255, 153, 51, 0.25) !important;
+  position: relative !important;
+  overflow: hidden !important;
+  background: rgba(15, 23, 42, 0.92) !important;
+}
+
+body.theme-independence-day #id-maintenance-overlay .glass-card::before {
+  content: '' !important;
+  position: absolute !important;
+  top: 0 !important;
+  left: 0 !important;
+  right: 0 !important;
+  height: 4px !important;
+  background: linear-gradient(90deg, #FF9933 0%, #FF9933 33.33%, #FFFFFF 33.33%, #FFFFFF 66.66%, #138808 66.66%, #138808 100%) !important;
+  box-shadow: 0 2px 14px rgba(255, 153, 51, 0.7), 0 2px 14px rgba(19, 136, 8, 0.7) !important;
+  z-index: 10 !important;
+}
+
+@keyframes idGlowPulse {
+  0%, 100% { box-shadow: 0 0 10px rgba(255, 153, 51, 0.3); }
+  50% { box-shadow: 0 0 22px rgba(19, 136, 8, 0.45); }
+}
+
+.id-glow-card {
+  animation: idGlowPulse 4s infinite ease-in-out;
+}

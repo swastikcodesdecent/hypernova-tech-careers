@@ -1,0 +1,377 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Member Portal — HyperNova Technology</title>
+  <meta name="description" content="Official Member Portal for HyperNova Technology Collaborators.">
+  
+  <!-- Premium Fonts Stack -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@500;700&family=Outfit:wght@400;500;600;700;800;900&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Space+Grotesk:wght@500;600;700;800&display=swap" rel="stylesheet">
+  
+  <!-- CSS Stylesheets -->
+  <link rel="stylesheet" href="assets/css/variables.css">
+  <link rel="stylesheet" href="assets/css/base.css">
+  <link rel="stylesheet" href="assets/css/components.css">
+  <link rel="stylesheet" href="assets/css/dashboard.css">
+  <link rel="stylesheet" href="assets/css/independence-day.css">
+</head>
+<body>
+
+  <div class="dashboard-layout">
+    <!-- Sidebar Navigation -->
+    <aside class="sidebar">
+      <div class="sidebar-brand">
+        <div class="brand-logo">
+          <img src="assets/images/logo.png" alt="HyperNova Technology Logo" style="height: 38px; width: auto; object-fit: contain;">
+        </div>
+      </div>
+
+      <nav class="sidebar-nav">
+        <div class="nav-item active" data-tab="tab-member-profile">
+          <svg class="svg-icon" viewBox="0 0 24 24"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>
+          <span>Personal Profile</span>
+        </div>
+        <div class="nav-item" data-tab="tab-member-depts">
+          <svg class="svg-icon" viewBox="0 0 24 24"><rect x="2" y="7" width="20" height="14" rx="2" ry="2"></rect><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"></path></svg>
+          <span>Assigned Departments</span>
+        </div>
+        <div class="nav-item" data-tab="tab-member-status">
+          <svg class="svg-icon" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"></circle><path d="M9 12l2 2 4-4"></path></svg>
+          <span>Membership Status</span>
+        </div>
+        <div class="nav-item" data-tab="tab-member-announcements">
+          <svg class="svg-icon" viewBox="0 0 24 24"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"></path><path d="M13.73 21a2 2 0 0 1-3.46 0"></path></svg>
+          <span>Company Announcements</span>
+        </div>
+        <div class="nav-item" data-tab="tab-member-projects">
+          <svg class="svg-icon" viewBox="0 0 24 24"><polygon points="12 2 2 7 12 12 22 7 12 2"></polygon><polyline points="2 17 12 22 22 17"></polyline><polyline points="2 12 12 17 22 12"></polyline></svg>
+          <span>Project Updates</span>
+        </div>
+        <div class="nav-item" data-tab="tab-member-innovation">
+          <svg class="svg-icon" viewBox="0 0 24 24"><path d="M8.5 14.5A2.5 2.5 0 0 0 11 12c0-1.38-.5-2-1-3-1.072-2.143-.224-4.054 2-6 .5 2.5 2 4.9 4 6.5 2 1.6 3 3.5 3 5.5a7 7 0 1 1-14 0c0-1.153.433-2.294 1-3a2.5 2.5 0 0 0 2.5 2.5z"></path></svg>
+          <span>Weekly Innovation Portal</span>
+        </div>
+        <div class="nav-item" data-tab="tab-member-notifications">
+          <svg class="svg-icon" viewBox="0 0 24 24"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path><polyline points="22,6 12,13 2,6"></polyline></svg>
+          <span>Notifications Inbox</span>
+        </div>
+      </nav>
+
+      <div class="sidebar-user">
+        <div class="flex items-center gap-2">
+          <div class="user-avatar" id="sidebar-member-avatar" style="overflow: hidden; background: linear-gradient(135deg, var(--primary), var(--accent-cyan));">
+            <img src="" id="sidebar-member-avatar-img" style="display:none; width:100%; height:100%; object-fit:cover;" alt="Avatar">
+            <span id="sidebar-member-avatar-initials">HM</span>
+          </div>
+          <div class="user-info">
+            <span class="user-name" id="sidebar-member-name">Member Name</span>
+            <span class="user-role" id="sidebar-member-role">Approved Collaborator</span>
+          </div>
+        </div>
+        <button class="btn btn-secondary btn-sm" id="btn-member-logout" title="Sign Out">
+          <svg class="svg-icon" viewBox="0 0 24 24" style="width:14px; height:14px;"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"></path><polyline points="16 17 21 12 16 7"></polyline><line x1="21" y1="12" x2="9" y2="12"></line></svg>
+        </button>
+      </div>
+    </aside>
+
+    <!-- Main Content Area -->
+    <main class="dashboard-main">
+      <header class="top-bar">
+        <div>
+          <h2>HyperNova Official Member Portal</h2>
+          <p>Welcome to your collaborator workspace. Access projects, department updates, and innovation ideas.</p>
+        </div>
+        <div>
+          <span class="badge badge-approved" id="header-member-badge">✓ Active Approved Member</span>
+        </div>
+      </header>
+
+      <!-- TAB 1: PERSONAL PROFILE -->
+      <section class="tab-content active" id="tab-member-profile">
+        <div class="glass-card" style="margin-bottom: 2rem;">
+          <div class="flex justify-between items-center" style="flex-wrap: wrap; gap: 1.5rem;">
+            <div class="flex items-center gap-4">
+              <div class="user-avatar" id="profile-hero-avatar-box" style="width: 72px; height: 72px; font-size: 1.75rem; border: 2px solid var(--accent-cyan); overflow: hidden; background: linear-gradient(135deg, var(--primary), var(--secondary));">
+                <img src="" id="profile-google-photo" style="display:none; width:100%; height:100%; object-fit:cover;" alt="Google Profile Photo">
+                <span id="profile-initials-fallback">HM</span>
+              </div>
+              <div>
+                <h3 style="margin: 0; font-size: 1.5rem;" id="profile-full-name">Member Name</h3>
+                <div class="flex items-center gap-2" style="margin-top: 0.35rem; flex-wrap: wrap;">
+                  <span class="badge badge-role" id="profile-role-badge">External Collaborator</span>
+                  <span class="badge badge-approved">Approved by CEO Ishan Pandit</span>
+                  <span style="font-size: 0.85rem; color: var(--text-muted);" id="profile-email-display">member@hypernovatech.in</span>
+                </div>
+              </div>
+            </div>
+            <div>
+              <span class="badge badge-approved" style="font-size: 0.85rem; padding: 0.4rem 0.85rem;">Clearance Level: Tier-1 Collaborator</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="grid grid-cols-2 gap-6">
+          <!-- Column A: Form & Profile Attributes -->
+          <div class="glass-card">
+            <h3>Collaborator Details & Application Data</h3>
+            <p style="font-size: 0.85rem; color: var(--text-muted); margin-bottom: 1.25rem;">Information imported from your approved onboarding application.</p>
+            
+            <div class="flex flex-col gap-3" style="font-size: 0.9rem;">
+              <div><strong>Application ID:</strong> <span id="p-app-id" style="font-family: var(--font-mono); color: var(--accent-cyan);">N/A</span></div>
+              <div><strong>Phone Number:</strong> <span id="p-phone">N/A</span></div>
+              <div><strong>GitHub Profile:</strong> <a href="#" id="p-github-link" target="_blank" style="color: var(--accent-cyan);">N/A</a></div>
+              <div><strong>LinkedIn Profile:</strong> <a href="#" id="p-linkedin-link" target="_blank" style="color: var(--accent-cyan);">N/A</a></div>
+              <div><strong>Resume Document:</strong> <a href="#" id="p-resume-link" target="_blank" style="color: var(--accent-cyan);">N/A</a></div>
+              <div><strong>Verified Tech Stack:</strong></div>
+              <div id="p-tech-tags" class="flex flex-wrap gap-2"></div>
+              <div><strong>CEO Approval Date:</strong> <span id="p-approval-date" style="color: #22c55e;">N/A</span></div>
+            </div>
+          </div>
+
+          <!-- Column B: Edit Profile Info & Google Avatar Photo Link -->
+          <div class="glass-card">
+            <h3>Update Profile & Contact Links</h3>
+            <p style="font-size: 0.85rem; color: var(--text-muted); margin-bottom: 1.25rem;">Update your profile picture link, GitHub handle, or contact details.</p>
+            
+            <form id="form-update-member-profile">
+              <div class="form-group">
+                <label class="form-label">Full Name</label>
+                <input type="text" class="form-control" id="edit-member-name" required>
+              </div>
+              <div class="form-group">
+                <label class="form-label">Profile Picture URL (Google Photo Link)</label>
+                <input type="url" class="form-control" id="edit-member-photo-url" placeholder="https://lh3.googleusercontent.com/a/...">
+              </div>
+              <div class="form-group">
+                <label class="form-label">Phone Number</label>
+                <input type="tel" class="form-control" id="edit-member-phone">
+              </div>
+              <div class="form-group">
+                <label class="form-label">GitHub Profile URL</label>
+                <input type="url" class="form-control" id="edit-member-github">
+              </div>
+              <button type="submit" class="btn btn-primary" style="margin-top: 1rem;">Save Profile Settings</button>
+            </form>
+          </div>
+        </div>
+      </section>
+
+      <!-- TAB 2: ASSIGNED DEPARTMENTS -->
+      <section class="tab-content" id="tab-member-depts">
+        <div class="glass-card" style="margin-bottom: 2rem; border-color: rgba(6, 182, 212, 0.3);">
+          <div class="flex justify-between items-center" style="margin-bottom: 1rem; flex-wrap: wrap; gap: 1rem;">
+            <div>
+              <h3 style="margin: 0; color: #ffffff;" id="dept-hero-name">Assigned Department</h3>
+              <p style="font-size: 0.85rem; color: var(--text-muted); margin: 0.25rem 0 0 0;" id="dept-hero-desc">Core department assignment for research & development.</p>
+            </div>
+            <div>
+              <span class="badge badge-approved" id="dept-hero-status">Active Department</span>
+            </div>
+          </div>
+
+          <div class="grid grid-cols-2 gap-4" style="font-size: 0.9rem; margin-top: 1rem;">
+            <div style="background: rgba(15, 23, 42, 0.7); padding: 1rem; border-radius: var(--radius-md); border: 1px solid var(--border-glass);">
+              <div style="color: var(--text-muted); font-size: 0.8rem; text-transform: uppercase; font-family: var(--font-mono);">Department Operations Head</div>
+              <div style="font-size: 1.1rem; font-weight: 700; color: var(--accent-cyan); margin-top: 0.25rem;" id="dept-head-name">Swastik Paul (IT Operations Head)</div>
+              <div style="font-size: 0.85rem; color: var(--text-muted);" id="dept-head-email">admin@hypernovatech.in</div>
+            </div>
+            <div style="background: rgba(15, 23, 42, 0.7); padding: 1rem; border-radius: var(--radius-md); border: 1px solid var(--border-glass);">
+              <div style="color: var(--text-muted); font-size: 0.8rem; text-transform: uppercase; font-family: var(--font-mono);">Department Team Roster</div>
+              <div style="font-size: 1.1rem; font-weight: 700; color: #ffffff; margin-top: 0.25rem;" id="dept-member-count">4 Active Collaborators</div>
+              <div style="font-size: 0.85rem; color: var(--text-muted);">Assigned to HyperNova R&D Projects</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="glass-card">
+          <h3>All HyperNova Technology R&D Departments</h3>
+          <p style="font-size: 0.85rem; color: var(--text-muted); margin-bottom: 1.25rem;">Overview of all technology divisions active across the organization.</p>
+          <div class="grid grid-cols-2 gap-4" id="all-depts-container">
+            <!-- Dynamically populated -->
+          </div>
+        </div>
+      </section>
+
+      <!-- TAB 3: MEMBERSHIP STATUS & CLEARANCE CERTIFICATE -->
+      <section class="tab-content" id="tab-member-status">
+        <div class="grid grid-cols-2 gap-6">
+          <div class="glass-card" style="border: 1px solid rgba(34, 197, 94, 0.3); background: rgba(15, 23, 42, 0.85);">
+            <h3 style="color: #22c55e; display: flex; align-items: center; gap: 0.5rem;">
+              <span>🏅 Official Membership Digital Badge</span>
+            </h3>
+            <p style="font-size: 0.85rem; color: var(--text-muted); margin-bottom: 1.5rem;">Verified membership credentials for HyperNova Technology 2026.</p>
+
+            <div style="background: rgba(30, 41, 59, 0.7); padding: 1.25rem; border-radius: var(--radius-lg); border: 1px solid rgba(255, 255, 255, 0.1);" class="flex flex-col gap-3">
+              <div><strong>Collaborator ID:</strong> <span style="font-family: var(--font-mono); color: var(--accent-cyan);" id="status-collab-id">HN-MEM-2026</span></div>
+              <div><strong>Membership Status:</strong> <span class="badge badge-approved">VERIFIED & APPROVED</span></div>
+              <div><strong>Approval Authority:</strong> CEO Ishan Pandit (HyperNova Technology)</div>
+              <div><strong>Assigned Role Claim:</strong> <span id="status-role-claim">External Collaborator</span></div>
+              <div><strong>Membership Granted On:</strong> <span id="status-granted-date">2026-08-12</span></div>
+            </div>
+
+            <button type="button" class="btn btn-primary" id="btn-download-member-pdf" style="width: 100%; margin-top: 1.5rem; justify-center: center;">
+              <span>Download Official Membership PDF Certificate</span>
+            </button>
+          </div>
+
+          <div class="glass-card">
+            <h3>CEO Authorization & Clearance Notice</h3>
+            <p style="font-size: 0.85rem; color: var(--text-muted); margin-bottom: 1rem;">Official clearance endorsement signed by CEO Ishan Pandit.</p>
+            <div style="background: rgba(15, 23, 42, 0.8); padding: 1rem; border-radius: var(--radius-md); border: 1px solid var(--border-glass); margin-bottom: 1rem;" id="ceo-approval-note">
+              "Congratulations on joining HyperNova Technology. Your qualifications and profile have been approved for collaborator access."
+            </div>
+            <div style="font-size: 0.85rem; color: var(--text-muted);">
+              Authorized by: <strong>Ishan Pandit (CEO & Founder)</strong>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- TAB 4: COMPANY ANNOUNCEMENTS -->
+      <section class="tab-content" id="tab-member-announcements">
+        <div class="glass-card">
+          <div class="flex justify-between items-center" style="margin-bottom: 1.5rem; flex-wrap: wrap; gap: 1rem;">
+            <div>
+              <h3 style="margin: 0;">Company Broadcasts & CEO Announcements</h3>
+              <p style="font-size: 0.85rem; color: var(--text-muted); margin: 0.25rem 0 0 0;">Official executive updates, event notices, and company directives.</p>
+            </div>
+            <span class="badge badge-pending">Executive Corner</span>
+          </div>
+
+          <div class="flex flex-col gap-4" id="member-announcements-container">
+            <!-- Dynamically populated -->
+          </div>
+        </div>
+      </section>
+
+      <!-- TAB 5: PROJECT UPDATES -->
+      <section class="tab-content" id="tab-member-projects">
+        <div class="glass-card">
+          <div class="flex justify-between items-center" style="margin-bottom: 1.5rem; flex-wrap: wrap; gap: 1rem;">
+            <div>
+              <h3 style="margin: 0;">HyperNova Technology R&D Project Updates</h3>
+              <p style="font-size: 0.85rem; color: var(--text-muted); margin: 0.25rem 0 0 0;">Technical milestones, release updates, and project deployment logs.</p>
+            </div>
+          </div>
+
+          <div class="flex flex-col gap-4" id="member-projects-container">
+            <!-- Dynamically populated -->
+          </div>
+        </div>
+      </section>
+
+      <!-- TAB 6: WEEKLY INNOVATION PORTAL & IDEAS DESK -->
+      <section class="tab-content" id="tab-member-innovation">
+        <div class="glass-card id-glow-card" style="margin-bottom: 2rem; border-color: rgba(249, 115, 22, 0.35); background: rgba(15, 23, 42, 0.85);">
+          <div class="flex justify-between items-center" style="flex-wrap: wrap; gap: 1rem;">
+            <div>
+              <h3 style="margin: 0; color: #ffffff; display: flex; align-items: center; gap: 0.5rem;">
+                <span>💡 Weekly Innovation Portal</span>
+              </h3>
+              <p style="font-size: 0.85rem; color: var(--text-muted); margin: 0.25rem 0 0 0;">
+                Submit ground-breaking R&D ideas, neural architecture designs, or cybersecurity protocols to the executive team.
+              </p>
+            </div>
+            <button type="button" class="btn btn-primary" id="btn-launch-innovation-portal" onclick="handleLaunchInnovationPortal()">
+              <span>Launch Weekly Innovation Hub &rarr;</span>
+            </button>
+          </div>
+        </div>
+
+        <div class="grid grid-cols-2 gap-6">
+          <!-- Submit New Idea Form -->
+          <div class="glass-card">
+            <h3>Submit Innovation Proposal</h3>
+            <p style="font-size: 0.85rem; color: var(--text-muted); margin-bottom: 1.25rem;">Propose new tech features or research concepts.</p>
+            
+            <form id="form-submit-idea">
+              <div class="form-group">
+                <label class="form-label">Idea Title <span class="required">*</span></label>
+                <input type="text" class="form-control" id="idea-title" placeholder="e.g. Quantum-Resistant Handshake Protocol" required>
+              </div>
+              <div class="form-group">
+                <label class="form-label">Category <span class="required">*</span></label>
+                <select class="form-control" id="idea-category" required>
+                  <option value="AI & Deep Learning">AI & Deep Learning</option>
+                  <option value="Cybersecurity & Encryption">Cybersecurity & Encryption</option>
+                  <option value="Quantum Computing">Quantum Computing</option>
+                  <option value="Robotics & Autonomous IoT">Robotics & Autonomous IoT</option>
+                  <option value="Cloud Infrastructure">Cloud Infrastructure</option>
+                </select>
+              </div>
+              <div class="form-group">
+                <label class="form-label">Technical Description & Scope <span class="required">*</span></label>
+                <textarea class="form-control" id="idea-desc" placeholder="Describe the technical architecture, goal, and expected impact..." required style="min-height: 110px;"></textarea>
+              </div>
+              <button type="submit" class="btn btn-primary" style="width: 100%;">Submit Proposal to R&D Board</button>
+            </form>
+          </div>
+
+          <!-- Submitted Ideas Tracker -->
+          <div class="glass-card">
+            <h3>Your Submitted Proposals & Idea Status</h3>
+            <p style="font-size: 0.85rem; color: var(--text-muted); margin-bottom: 1.25rem;">Track evaluation status and feedback from CEO Ishan Pandit & IT Head Swastik Paul.</p>
+            
+            <div class="table-responsive">
+              <table class="custom-table">
+                <thead>
+                  <tr>
+                    <th>Title</th>
+                    <th>Category</th>
+                    <th>Status</th>
+                  </tr>
+                </thead>
+                <tbody id="member-ideas-tbody">
+                  <!-- Dynamically populated -->
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- TAB 7: NOTIFICATIONS INBOX -->
+      <section class="tab-content" id="tab-member-notifications">
+        <div class="glass-card">
+          <div class="flex justify-between items-center" style="margin-bottom: 1.5rem;">
+            <div>
+              <h3 style="margin: 0;">Notifications Inbox</h3>
+              <p style="font-size: 0.85rem; color: var(--text-muted); margin: 0.25rem 0 0 0;">Direct alerts and status updates from CEO Ishan Pandit and IT Head Swastik Paul.</p>
+            </div>
+            <button class="btn btn-secondary btn-sm" id="btn-clear-notifications">Clear All</button>
+          </div>
+
+          <div class="flex flex-col gap-3" id="member-notifications-container">
+            <!-- Dynamically populated -->
+          </div>
+        </div>
+      </section>
+
+    </main>
+  </div>
+
+  <!-- CDN Firebase Compat Scripts -->
+  <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-auth-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-storage-compat.js"></script>
+
+  <!-- jsPDF CDN -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+
+  <!-- Core App Scripts -->
+  <script src="assets/js/firebase-config.js"></script>
+  <script src="assets/js/store.js"></script>
+  <script src="assets/js/theme.js"></script>
+  <script src="assets/js/notifications.js"></script>
+  <script src="assets/js/audit.js"></script>
+  <script src="assets/js/auth.js"></script>
+  <script src="assets/js/signature.js"></script>
+  <script src="assets/js/pdf-gen.js"></script>
+  <script src="assets/js/maintenance.js"></script>
+  <script src="assets/js/member.js"></script>
+</body>
+</html>

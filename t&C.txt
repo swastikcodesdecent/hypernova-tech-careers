@@ -1,0 +1,172 @@
+HYPERNOVA TECHNOLOGY
+TERMS & CONDITIONS
+Effective Date: 10.08.2026
+These Terms & Conditions govern participation in HyperNova Technology as a Volunteer Collaborator, Collaborator, Community Member, Intern Collaborator, or other contributor.
+By registering, submitting an application, accessing HyperNova Technology systems, or participating in its projects or communities, you acknowledge that you have read, understood, and agreed to these Terms & Conditions.
+1. About HyperNova Technology
+• HyperNova Technology is currently an early-stage technology initiative focused on Robotics, Artificial Intelligence, Embedded Systems, Software Development, Automation, Research, and Future Technologies.
+• HyperNova Technology is currently working toward establishing itself as a registered Private Limited (Pvt. Ltd.) company as soon as practically possible.
+• Until formal employment or other written agreements are provided, participation in HyperNova Technology does not automatically create an employer-employee relationship.
+• Participation in the community or submission of an application does not guarantee selection, employment, salary, equity, ownership, or future compensation.
+2. Types of Participation
+HyperNova Technology may have different forms of participation, including:
+• Volunteer Collaborator — an individual who voluntarily contributes to projects, teams, research, development, community activities, or other company initiatives.
+• Collaborator — an independent individual, organization, researcher, startup, or company that proposes or works on ideas, projects, technologies, research, or partnerships with HyperNova Technology without necessarily becoming an internal team member.
+• Team Member — an approved contributor working under an established department or Department Head.
+• Head Team Member — a person responsible for leading a particular department or function.
+The exact responsibilities and compensation, if any, shall depend on the applicable project or written agreement.
+3. No Guaranteed Salary
+• HyperNova Technology does not guarantee a monthly salary to Volunteer Collaborators or general Collaborators.
+• Where compensation is applicable, it may arise from specific projects, investments, product sales, prototype sales, client revenue, sponsorships, angel investment, licensing, or other commercial activity.
+• Compensation must be agreed upon in writing before the relevant paid work or project arrangement begins.
+• Participation in a project does not automatically entitle a contributor to a percentage of company revenue, investment, product sales, or intellectual property.
+4. Project-Specific Agreements
+• Individual projects may have their own ownership, compensation, contribution, confidentiality, and intellectual-property arrangements.
+• Where a separate written agreement exists, that agreement shall govern the specific project to the extent permitted by applicable law.
+• Contributors must review and accept applicable project notices before participating in restricted projects.
+5. AgroBotX Special Project Terms
+• AgroBotX is a founder-led flagship project of HyperNova Technology.
+• The Founder retains the primary ownership and control of the AgroBotX concept, project direction, and existing founder-contributed work, subject to applicable law and any separate written agreement.
+• Unless a separate written agreement states otherwise, the current intended net-profit allocation for AgroBotX is 95% to the Founder and 5% collectively for eligible contributors.
+• The 5% contributor portion is not automatically divided equally among all members.
+• The allocation among eligible contributors shall depend on their documented contribution and the applicable project agreement.
+• Participation in AgroBotX does not automatically grant equity, ownership, voting rights, or intellectual-property rights in the project.
+• These specific 95%/5% terms apply only to AgroBotX and shall not automatically apply to other HyperNova Technology projects.
+6. Intellectual Property
+• Contributors must disclose whether submitted work contains pre-existing intellectual property belonging to themselves or another party.
+• Contributors must not submit material that they do not have the legal right to use.
+• Company projects, source code, designs, documentation, prototypes, research, branding, and other intellectual property shall be governed by the applicable project agreement and applicable law.
+• A contributor must not represent HyperNova Technology's intellectual property as their personal property without authorization.
+• Contributors may not publish, sell, license, distribute, or commercially exploit confidential company work without written authorization.
+• Portfolio or GitHub publication of private company work requires appropriate authorization.
+7. Ideas and Proposals
+• Every approved member is encouraged to contribute ideas.
+• Ideas are not restricted to a person's department.
+• A Business Development member may propose an AI idea, a Marketing member may propose a robotics idea, and a Software member may propose a business or hardware idea.
+• Submission of an idea does not automatically transfer ownership or guarantee compensation.
+• The treatment of a specific idea shall depend on applicable intellectual-property law and any written agreement governing the project.
+• HyperNova Technology may evaluate, modify, combine, prioritize, postpone, or develop submitted ideas where it has the appropriate rights to do so.
+8. Confidentiality
+Contributors may receive confidential information including:
+• Source code
+• Product designs
+• CAD files
+• Circuit and PCB designs
+• AI models
+• Research
+• Business plans
+• Financial information
+• Investor information
+• Customer information
+• Internal documentation
+• Unreleased products
+• Project strategies
+• Private communications
+Contributors must not disclose confidential information to unauthorized individuals or organizations.
+Confidential information must not be copied, sold, published, leaked, or used for unauthorized personal or commercial purposes.
+Confidentiality obligations may continue after a person leaves HyperNova Technology, subject to applicable law.
+9. Use of Company Accounts and Systems
+• Company accounts, GitHub repositories, email accounts, hosting accounts, databases, websites, and other systems must only be used for authorized purposes.
+• Login credentials must never be shared with unauthorized individuals.
+• Contributors must not attempt to bypass access controls.
+• Contributors must not access information outside their assigned permissions.
+• Any suspected security incident must be reported immediately to the appropriate IT administrator or Founder.
+• Company systems must not be used for illegal activity, harassment, unauthorized access, malicious software, or other harmful activity.
+10. Community Conduct
+All members must:
+• Treat other members respectfully.
+• Communicate professionally.
+• Avoid harassment, threats, discrimination, hate speech, and abusive behavior.
+• Avoid spam and unauthorized advertising.
+• Respect different opinions and backgrounds.
+• Avoid unnecessary conflicts.
+• Give appropriate credit to other contributors.
+• Follow reasonable instructions from authorized Department Heads and the Founder.
+• Keep internal discussions confidential where required.
+11. WhatsApp Community
+• Members must use the appropriate WhatsApp group for each topic.
+• Members must not spam the community.
+• Members must not share confidential company information outside authorized channels.
+• Members must not share private screenshots or internal conversations without permission.
+• Members must not impersonate HyperNova Technology representatives.
+• Members must not use the community to distribute illegal, harmful, abusive, or inappropriate material.
+• Members should use the Support/Help Desk for assistance and the Complaints/Feedback channel for concerns.
+• Administrators may remove content or restrict/remove members who repeatedly violate community rules.
+12. Application Information
+Applicants must provide accurate information during registration.
+This includes:
+• Name
+• Contact information
+• Educational information
+• Skills
+• CV/Resume
+• GitHub or portfolio information
+• Previous projects
+• Certificates
+• Other information specifically requested by the application
+Providing false information, plagiarism, impersonation, or submitting someone else's work as one's own may result in rejection or removal.
+13. Minors
+• Applicants under the age of majority may participate only where permitted by applicable law and HyperNova Technology's procedures.
+• Minor applicants may be required to provide school information such as school name, class, board, and stream for identification of their educational background.
+• Additional parental or guardian consent may be required where legally necessary.
+• HyperNova Technology should not request unnecessary sensitive information from minors.
+14. Selection and Approval
+• Submission of an application does not guarantee acceptance.
+• Applications may be reviewed based on skills, previous projects, GitHub activity, experience, communication, availability, and the requirements of the relevant department.
+• The Founder & CEO retains final approval authority for membership and Head Team appointments unless formally delegated.
+• Department Heads may review and recommend applicants but do not automatically have authority to approve membership.
+15. Head Team and Promotion
+• Head Team positions may include CTO, Head of IT, Head of Robotics, Head of AI, Head of Embedded Systems & Electronics, Head of Software Development, Head of Mechanical Design & CAD, Head of Business Development, and Head of Marketing & Community Relations.
+• Filling a Head position does not prevent additional contributors from joining that department.
+• Members may work under an established Department Head.
+• Promotion to leadership positions may depend on performance, leadership ability, skills, contribution, reliability, and future company requirements.
+• HyperNova Technology intends to formalize appropriate roles and employment structures as the organization develops and becomes a registered company.
+16. Innovation and Weekly Ideas
+• Approved members may submit ideas through the Member Dashboard.
+• Members are encouraged to contribute ideas regularly, including through the weekly innovation system.
+• Ideas may be submitted regardless of the member's department.
+• Submitted ideas may be reviewed using AI-assisted analysis and human review.
+• AI analysis is advisory and does not replace human decision-making.
+• Ideas may be categorized according to feasibility, impact, resources, strategic importance, and project priority.
+• An idea may be postponed when it cannot currently be implemented because of technical, financial, legal, or resource limitations.
+• No promise of immediate implementation or compensation is made merely because an idea has been submitted.
+17. Project Priorities
+• HyperNova Technology may prioritize projects according to feasibility, resources, funding, market requirements, safety, technical requirements, and strategic importance.
+• Department Heads may recommend priorities within their departments.
+• The Founder & CEO retains final authority over overall company project priorities unless otherwise delegated.
+18. Payment and Revenue
+• Where a contributor is entitled to compensation, the amount, timing, conditions, and calculation method should be documented in writing.
+• Revenue from a project does not automatically become distributable among every member of HyperNova Technology.
+• Investment received by HyperNova Technology does not automatically become personal income for contributors.
+• Any profit-sharing arrangement must identify the applicable project, eligible contributors, calculation method, and payment conditions.
+19. Termination or Removal
+HyperNova Technology may suspend or terminate a member's access for reasons including:
+• Serious policy violations.
+• Unauthorized disclosure of confidential information.
+• Misuse of company systems.
+• Fraud or misrepresentation.
+• Harassment or abusive conduct.
+• Unauthorized use of intellectual property.
+• Repeated failure to follow reasonable project requirements.
+• Security violations.
+• Other serious misconduct.
+Upon removal, the individual must return or delete confidential company materials as required.
+20. Changes to Terms
+• HyperNova Technology may update these Terms & Conditions as its operations develop.
+• Material changes should be communicated through the website or official communication channels.
+• Where legally required, members may be asked to provide renewed acceptance.
+• The latest published version shall identify its effective date.
+21. Acceptance
+Before submitting an application, the applicant must confirm:
+☐ I have read and understood these Terms & Conditions.
+☐ I agree to follow the HyperNova Technology policies.
+☐ I understand that participation does not automatically guarantee employment or salary.
+☐ I understand the applicable project-specific terms.
+☐ I understand the AgroBotX 95%/5% project-specific policy where applicable.
+☐ I confirm that the information I provide is accurate to the best of my knowledge.
+☐ I agree to follow the community and confidentiality requirements.
+☐ I understand that acceptance into HyperNova Technology is subject to approval.
+Electronic Signature: __________________________
+Full Legal Name: ______________________________
+Date: ________________________________________
+Agreement ID: _________________________________

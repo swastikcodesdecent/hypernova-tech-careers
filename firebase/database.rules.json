@@ -1,0 +1,66 @@
+{
+  "rules": {
+    ".read": "auth != null",
+    ".write": "auth != null",
+    "users": {
+      "$userId": {
+        ".read": "auth != null",
+        ".write": "auth != null"
+      }
+    },
+    "applications": {
+      "$appId": {
+        ".read": "auth != null",
+        ".write": "auth != null"
+      }
+    },
+    "departments": {
+      "$deptId": {
+        ".read": "auth != null",
+        ".write": "auth != null"
+      }
+    },
+    "supportTickets": {
+      "$ticketId": {
+        ".read": "auth != null",
+        ".write": "auth != null"
+      }
+    },
+    "notifications": {
+      "$notifId": {
+        ".read": "auth != null",
+        ".write": "auth != null"
+      }
+    },
+    "tasks": {
+      "$taskId": {
+        ".read": "auth != null",
+        ".write": "auth != null"
+      }
+    },
+    "announcements": {
+      "$announcementId": {
+        ".read": "auth != null",
+        ".write": "auth != null"
+      }
+    },
+    "ideas": {
+      "$ideaId": {
+        ".read": "auth != null",
+        ".write": "auth != null"
+      }
+    },
+    "projectUpdates": {
+      "$updateId": {
+        ".read": "auth != null",
+        ".write": "auth != null"
+      }
+    },
+    "auditLogs": {
+      "$logId": {
+        ".read": "auth != null",
+        ".write": "auth != null"
+      }
+    }
+  }
+}

@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>HyperNova Technology — Launching 15th August 2026</title>
+  <meta name="description" content="HyperNova Technology is coming soon. Official launch on 15th August 2026.">
+  
+  <!-- Premium Fonts Stack (Space Grotesk, Outfit, JetBrains Mono, Plus Jakarta Sans) -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@500;700&family=Outfit:wght@400;500;600;700;800;900&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Space+Grotesk:wght@500;600;700;800&display=swap" rel="stylesheet">
+  
+  <!-- CSS Stylesheets -->
+  <link rel="stylesheet" href="assets/css/variables.css">
+  <link rel="stylesheet" href="assets/css/base.css">
+  <link rel="stylesheet" href="assets/css/components.css">
+  <link rel="stylesheet" href="assets/css/landing.css">
+  <link rel="stylesheet" href="assets/css/independence-day.css">
+
+  <style>
+    /* Countdown Timer Card Styles */
+    .countdown-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 1rem;
+      width: 100%;
+      margin: 2.5rem 0 1.5rem 0;
+    }
+    
+    .timer-box {
+      background: rgba(15, 23, 42, 0.85);
+      border: 1px solid var(--border-glass);
+      border-radius: var(--radius-lg);
+      padding: 1.5rem 0.5rem;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.4);
+      transition: transform var(--transition-fast), border-color var(--transition-fast);
+    }
+    
+    .timer-box:hover {
+      border-color: var(--accent-cyan);
+      transform: translateY(-3px);
+    }
+    
+    .timer-number {
+      font-family: var(--font-heading);
+      font-size: 2.5rem;
+      font-weight: 800;
+      color: #ffffff;
+      background: linear-gradient(135deg, #ffffff 0%, #38bdf8 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      line-height: 1;
+      margin-bottom: 0.4rem;
+    }
+    
+    .timer-label {
+      font-family: var(--font-mono);
+      font-size: 0.725rem;
+      font-weight: 700;
+      letter-spacing: 0.15em;
+      color: var(--text-dim);
+      text-transform: uppercase;
+    }
+
+    @media (max-width: 480px) {
+      .countdown-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+      .timer-number {
+        font-size: 1.85rem;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Top Header Logo Container -->
+  <div class="portal-top-logo">
+    <img src="assets/images/logo.png" alt="HyperNova Technology Logo" class="portal-logo-img">
+  </div>
+
+  <!-- Main Coming Soon Card Container -->
+  <div class="cyber-auth-card animate-fade-in" style="max-width: 580px; text-align: center;">
+    
+    <!-- Subtitle & Main Heading -->
+    <div class="portal-subtitle">HYPERNOVA TECHNOLOGY</div>
+    <h1 class="portal-main-title" style="font-size: 2.1rem; line-height: 1.15;">NEXT-GEN TECHNOLOGY LAUNCHING SOON</h1>
+    <p class="portal-desc" style="margin-bottom: 1.25rem;">Building future innovations in AI, Robotics, Embedded Systems, and Automation. Mark your calendar for <strong>15th August 2026</strong>.</p>
+
+    <!-- Countdown Timer Grid -->
+    <div class="countdown-grid">
+      <div class="timer-box">
+        <span class="timer-number" id="timer-days">00</span>
+        <span class="timer-label">DAYS</span>
+      </div>
+      <div class="timer-box">
+        <span class="timer-number" id="timer-hours">00</span>
+        <span class="timer-label">HOURS</span>
+      </div>
+      <div class="timer-box">
+        <span class="timer-number" id="timer-mins">00</span>
+        <span class="timer-label">MINUTES</span>
+      </div>
+      <div class="timer-box">
+        <span class="timer-number" id="timer-secs">00</span>
+        <span class="timer-label">SECONDS</span>
+      </div>
+    </div>
+
+    <!-- Access Gateway Link -->
+    <div style="margin-top: 1.5rem; padding-top: 1.5rem; border-top: 1px solid var(--border-glass); width: 100%;">
+      <a href="index.html" class="btn btn-primary" style="font-family: var(--font-heading); width: 100%; justify-content: center; padding: 0.9rem 1.5rem; font-size: 0.95rem;">
+        <span>Access Careers & Collaborator Gateway &rarr;</span>
+      </a>
+    </div>
+
+  </div>
+
+  <!-- Bottom Footer Info -->
+  <div class="portal-bottom-footer">
+    HyperNova Technology &copy; 2026 &bull; Launch Date: 15.08.2026
+  </div>
+
+  <!-- Inline Self-Contained JavaScript for Countdown Ticker -->
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      // Target Launch Date: 15th August 2026 00:00:00
+      const launchDate = new Date('2026-08-15T00:00:00+05:30').getTime();
+
+      function updateCountdown() {
+        const now = new Date().getTime();
+        const distance = launchDate - now;
+
+        if (distance <= 0) {
+          document.getElementById('timer-days').innerText = '00';
+          document.getElementById('timer-hours').innerText = '00';
+          document.getElementById('timer-mins').innerText = '00';
+          document.getElementById('timer-secs').innerText = '00';
+          return;
+        }
+
+        const days = Math.floor(distance / (1000 * 60 * 60 * 24));
+        const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+        const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+        const seconds = Math.floor((distance % (1000 * 60)) / 1000);
+
+        document.getElementById('timer-days').innerText = days < 10 ? '0' + days : days;
+        document.getElementById('timer-hours').innerText = hours < 10 ? '0' + hours : hours;
+        document.getElementById('timer-mins').innerText = minutes < 10 ? '0' + minutes : minutes;
+        document.getElementById('timer-secs').innerText = seconds < 10 ? '0' + seconds : seconds;
+      }
+
+      // Initial execution & 1-second ticker interval
+      updateCountdown();
+      setInterval(updateCountdown, 1000);
+    });
+  </script>
+  <script src="assets/js/theme.js"></script>
+  <script src="assets/js/maintenance.js"></script>
+</body>
+</html>
