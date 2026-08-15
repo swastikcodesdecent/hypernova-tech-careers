@@ -340,8 +340,11 @@ document.addEventListener('DOMContentLoaded', async () => {
       const pdfRes = await window.HyperNovaPDF.generatePDF(app);
       const iframe = document.getElementById('it-insp-pdf-iframe');
       if (iframe && pdfRes) {
-        if (pdfRes.dataUrl) iframe.src = pdfRes.dataUrl;
-        else if (pdfRes.blobUrl) iframe.src = pdfRes.blobUrl;
+        if (pdfRes.htmlContent) {
+          iframe.srcdoc = pdfRes.htmlContent;
+        } else {
+          iframe.src = pdfRes.blobUrl || pdfRes.dataUrl;
+        }
       }
     } catch (err) {
       console.warn("IT Clearance PDF render error:", err);
@@ -523,10 +526,10 @@ window.openITAppInspector = async function(docId) {
     const pdfRes = await window.HyperNovaPDF.generatePDF(app);
     const iframe = document.getElementById('it-insp-pdf-iframe');
     if (iframe && pdfRes) {
-      if (pdfRes.dataUrl) {
-        iframe.src = pdfRes.dataUrl;
-      } else if (pdfRes.blobUrl) {
-        iframe.src = pdfRes.blobUrl;
+      if (pdfRes.htmlContent) {
+        iframe.srcdoc = pdfRes.htmlContent;
+      } else {
+        iframe.src = pdfRes.blobUrl || pdfRes.dataUrl;
       }
     }
   } catch (err) {
