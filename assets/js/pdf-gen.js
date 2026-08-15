@@ -11,9 +11,9 @@ class ApplicationPDFGenerator {
       const doc = new jsPDF({ unit: 'mm', format: 'a4' });
       const pageWidth = 210;
       const pageHeight = 297;
-      const margin = 15;
-      const contentWidth = pageWidth - (margin * 2); // 180mm
-      const maxContentY = 262; // Leave room for multi-page signature footer
+      const margin = 14;
+      const contentWidth = pageWidth - (margin * 2); // 182mm
+      const maxContentY = 255; // Leave generous room for multi-page signature footer & prevent overlap
 
       // Retrieve full Terms & Conditions text
       const tncText = window.HYPERNOVA_TNC_TEXT || `HYPERNOVA TECHNOLOGY — TERMS & CONDITIONS
@@ -29,18 +29,18 @@ These Terms & Conditions govern participation in HyperNova Technology.`;
         doc.setTextColor(255, 255, 255);
         doc.setFont('helvetica', 'bold');
         doc.setFontSize(16);
-        doc.text('HYPERNOVA TECHNOLOGY', margin, 15);
+        doc.text('HYPERNOVA TECHNOLOGY', margin, 14);
 
         doc.setFontSize(9);
         doc.setTextColor(56, 189, 248);
-        doc.text('OFFICIAL CAREERS & COLLABORATION AGREEMENT & APPLICATION', margin, 23);
+        doc.text('OFFICIAL CAREERS & COLLABORATION AGREEMENT & APPLICATION', margin, 22);
 
         doc.setFillColor(30, 41, 59);
-        doc.rect(margin, 26, contentWidth, 8, 'F');
+        doc.rect(margin, 25, contentWidth, 8, 'F');
         doc.setFontSize(8.5);
         doc.setTextColor(226, 232, 240);
-        doc.text(`Application ID: ${appData.appId || 'HN-2026-0000'}`, margin + 3, 31.5);
-        doc.text(`Role: ${(appData.applicantType || 'Collaborator').replace('_', ' ').toUpperCase()}`, margin + 100, 31.5);
+        doc.text(`Application ID: ${appData.appId || 'HN-2026-0000'}`, margin + 3, 30.5);
+        doc.text(`Role: ${(appData.applicantType || 'Collaborator').replace('_', ' ').toUpperCase()}`, margin + 95, 30.5);
       };
 
       // Header drawing helper for subsequent pages
@@ -48,7 +48,7 @@ These Terms & Conditions govern participation in HyperNova Technology.`;
         doc.setFontSize(8);
         doc.setTextColor(100, 116, 139);
         doc.setFont('helvetica', 'normal');
-        doc.text(`HYPERNOVA TECHNOLOGY — TERMS & CONDITIONS (App ID: ${appData.appId || 'HN-2026-0000'})`, margin, 12);
+        doc.text(`HYPERNOVA TECHNOLOGY — CAREERS & COLLABORATION DOCUMENT (App ID: ${appData.appId || 'HN-2026-0000'})`, margin, 12);
         doc.setDrawColor(226, 232, 240);
         doc.setLineWidth(0.2);
         doc.line(margin, 14, pageWidth - margin, 14);
@@ -66,7 +66,7 @@ These Terms & Conditions govern participation in HyperNova Technology.`;
       };
 
       // ====================================================
-      // 1. OFFICIAL TERMS & CONDITIONS (ALL 21 SECTIONS)
+      // 1. OFFICIAL TERMS & CONDITIONS (FIRST IN DOCUMENT)
       // ====================================================
       doc.setFontSize(12);
       doc.setFont('helvetica', 'bold');
@@ -109,68 +109,25 @@ These Terms & Conditions govern participation in HyperNova Technology.`;
       }
 
       // ====================================================
-      // 2. LEGAL VERIFICATION & E-SIGNATURE ACCEPTANCE
-      // ====================================================
-      checkPageBreak(45);
-      y += 6;
-      doc.setFontSize(12);
-      doc.setFont('helvetica', 'bold');
-      doc.setTextColor(79, 70, 229);
-      doc.text('2. LEGAL VERIFICATION & E-SIGNATURE ACCEPTANCE', margin, y);
-      doc.setDrawColor(79, 70, 229);
-      doc.setLineWidth(0.4);
-      doc.line(margin, y + 2, pageWidth - margin, y + 2);
-      y += 8;
-
-      doc.setFontSize(8.5);
-      doc.setFont('helvetica', 'normal');
-      doc.setTextColor(71, 85, 105);
-      const declText = "By signing below, the applicant confirms full reading, understanding, and unreserved agreement to all 21 sections of the HyperNova Technology Terms & Conditions (v1.0), and certifies under penalty of misrepresentation that all details provided in this application are accurate and authentic.";
-      const wrappedDecl = doc.splitTextToSize(declText, contentWidth);
-      doc.text(wrappedDecl, margin, y);
-      y += (wrappedDecl.length * 4.2) + 6;
-
-      checkPageBreak(34);
-      doc.setFillColor(248, 250, 252);
-      doc.setDrawColor(203, 213, 225);
-      doc.rect(margin, y, contentWidth, 30, 'DF');
-
-      doc.setFontSize(8.5);
-      doc.setFont('helvetica', 'bold');
-      doc.setTextColor(30, 41, 59);
-      doc.text(`Terms Accepted v1.0: ${new Date(appData.termsAcceptedAt || Date.now()).toLocaleString()}`, margin + 4, y + 7);
-      doc.text(`Applicant Legal Name: ${appData.fullName || appData.applicantEmail}`, margin + 4, y + 14);
-      doc.text(`Applicant Email: ${appData.applicantEmail || appData.email}`, margin + 4, y + 21);
-
-      if (appData.signatureDataUrl) {
-        try {
-          doc.text('Applicant Signature:', margin + 110, y + 7);
-          doc.addImage(appData.signatureDataUrl, 'PNG', margin + 110, y + 9, 52, 17);
-        } catch (e) {
-          doc.text(`[E-Signed: ${appData.fullName || 'Verified'}]`, margin + 110, y + 16);
-        }
-      } else {
-        doc.text(`[E-Signed: ${appData.fullName || 'Verified'}]`, margin + 110, y + 16);
-      }
-
-      y += 36;
-
-      // ====================================================
-      // 3. APPLICANT SUBMISSION & FILLED APPLICATION DETAILS
+      // 2. APPLICANT PROFILE & SUBMITTED APPLICATION DETAILS
       // ====================================================
       checkPageBreak(35);
       y += 6;
       doc.setFontSize(12);
       doc.setFont('helvetica', 'bold');
       doc.setTextColor(79, 70, 229);
-      doc.text('3. APPLICANT SUBMISSION & FILLED APPLICATION DETAILS', margin, y);
+      doc.text('2. APPLICANT PROFILE & SUBMITTED APPLICATION DETAILS', margin, y);
       doc.setDrawColor(79, 70, 229);
       doc.setLineWidth(0.4);
       doc.line(margin, y + 2, pageWidth - margin, y + 2);
       y += 10;
 
       const renderDetailRow = (label, val) => {
-        checkPageBreak(8);
+        const valStr = String(val || 'N/A');
+        const wrappedVal = doc.splitTextToSize(valStr, 125);
+        
+        checkPageBreak(12);
+
         doc.setFont('helvetica', 'bold');
         doc.setFontSize(9);
         doc.setTextColor(30, 41, 59);
@@ -178,9 +135,13 @@ These Terms & Conditions govern participation in HyperNova Technology.`;
 
         doc.setFont('helvetica', 'normal');
         doc.setTextColor(51, 65, 85);
-        const wrappedVal = doc.splitTextToSize(val || 'N/A', 125);
-        doc.text(wrappedVal, margin + 55, y);
-        y += (wrappedVal.length * 4.5) + 3;
+
+        for (let k = 0; k < wrappedVal.length; k++) {
+          checkPageBreak(4.5);
+          doc.text(wrappedVal[k], margin + 55, y);
+          y += 4.5;
+        }
+        y += 2.5;
       };
 
       renderDetailRow('Full Legal Name:', appData.fullName || appData.applicantEmail);
@@ -207,7 +168,33 @@ These Terms & Conditions govern participation in HyperNova Technology.`;
         }
       }
 
-      checkPageBreak(32);
+      // ====================================================
+      // 3. LEGAL VERIFICATION & E-SIGNATURE ACCEPTANCE
+      // ====================================================
+      checkPageBreak(45);
+      y += 6;
+      doc.setFontSize(12);
+      doc.setFont('helvetica', 'bold');
+      doc.setTextColor(79, 70, 229);
+      doc.text('3. LEGAL VERIFICATION & E-SIGNATURE ACCEPTANCE', margin, y);
+      doc.setDrawColor(79, 70, 229);
+      doc.setLineWidth(0.4);
+      doc.line(margin, y + 2, pageWidth - margin, y + 2);
+      y += 8;
+
+      doc.setFontSize(8.5);
+      doc.setFont('helvetica', 'normal');
+      doc.setTextColor(71, 85, 105);
+      const declText = "By signing below, the applicant confirms full reading, understanding, and unreserved agreement to all sections of the HyperNova Technology Terms & Conditions (v1.0), and certifies under penalty of misrepresentation that all details provided in this application are accurate and authentic.";
+      const wrappedDecl = doc.splitTextToSize(declText, contentWidth);
+      for (let d = 0; d < wrappedDecl.length; d++) {
+        checkPageBreak(4.5);
+        doc.text(wrappedDecl[d], margin, y);
+        y += 4.2;
+      }
+      y += 4;
+
+      checkPageBreak(34);
       doc.setFillColor(248, 250, 252);
       doc.setDrawColor(203, 213, 225);
       doc.rect(margin, y, contentWidth, 30, 'DF');
@@ -215,25 +202,25 @@ These Terms & Conditions govern participation in HyperNova Technology.`;
       doc.setFontSize(8.5);
       doc.setFont('helvetica', 'bold');
       doc.setTextColor(30, 41, 59);
-      doc.text(`Applicant Name: ${appData.fullName || 'Applicant'}`, margin + 5, y + 7);
-      doc.text(`Terms Accepted At: ${appData.termsAcceptedAt ? new Date(appData.termsAcceptedAt).toLocaleString() : new Date().toLocaleString()}`, margin + 5, y + 15);
-      doc.text(`Agreement Record ID: ${appData.appId || 'HN-2026-0000'}`, margin + 5, y + 23);
+      doc.text(`Terms Accepted v1.0: ${new Date(appData.termsAcceptedAt || Date.now()).toLocaleString()}`, margin + 4, y + 7);
+      doc.text(`Applicant Legal Name: ${appData.fullName || appData.applicantEmail}`, margin + 4, y + 14);
+      doc.text(`Applicant Email: ${appData.applicantEmail || appData.email}`, margin + 4, y + 21);
 
       doc.setFont('helvetica', 'bold');
       doc.text('Applicant Signature:', margin + 110, y + 7);
 
       if (appData.signatureDataUrl) {
         try {
-          doc.addImage(appData.signatureDataUrl, 'PNG', margin + 110, y + 9, 55, 17);
+          doc.addImage(appData.signatureDataUrl, 'PNG', margin + 110, y + 9, 52, 17);
         } catch (e) {
           doc.setFont('helvetica', 'italic');
           doc.setTextColor(37, 99, 235);
-          doc.text(`[Verified E-Signature: ${appData.fullName || 'Accepted'}]`, margin + 110, y + 17);
+          doc.text(`[E-Signed: ${appData.fullName || 'Verified'}]`, margin + 110, y + 16);
         }
       } else {
         doc.setFont('helvetica', 'italic');
         doc.setTextColor(37, 99, 235);
-        doc.text(`[Verified E-Signature: ${appData.fullName || 'Accepted'}]`, margin + 110, y + 17);
+        doc.text(`[E-Signed: ${appData.fullName || 'Verified'}]`, margin + 110, y + 16);
       }
 
       y += 36;
@@ -298,43 +285,48 @@ These Terms & Conditions govern participation in HyperNova Technology.`;
         // Footer Separator
         doc.setDrawColor(203, 213, 225);
         doc.setLineWidth(0.3);
-        doc.line(margin, 274, pageWidth - margin, 274);
+        doc.line(margin, 272, pageWidth - margin, 272);
 
         // Footer Metadata Text
         doc.setFontSize(7.5);
         doc.setFont('helvetica', 'normal');
         doc.setTextColor(100, 116, 139);
-        doc.text(`HyperNova Technology — Official Recruitment Document | App ID: ${appData.appId || 'HN-2026-0000'}`, margin, 279);
-        doc.text(`Terms & Conditions v1.0 | Page ${pageNum} of ${totalPages}`, margin, 283);
+        doc.text(`HyperNova Technology — Official Recruitment Document | App ID: ${appData.appId || 'HN-2026-0000'}`, margin, 277);
+        doc.text(`Terms & Conditions v1.0 | Page ${pageNum} of ${totalPages}`, margin, 281);
 
         // Footer Signature Stamps
         doc.setFontSize(7);
         doc.setFont('helvetica', 'bold');
         doc.setTextColor(30, 41, 59);
-        doc.text('Applicant Signature:', 105, 279);
 
+        doc.text('Applicant Sign:', 115, 277);
         if (appData.signatureDataUrl) {
           try {
-            doc.addImage(appData.signatureDataUrl, 'PNG', 105, 280, 20, 6);
+            doc.addImage(appData.signatureDataUrl, 'PNG', 115, 278, 18, 6);
           } catch (e) {
             doc.setFontSize(6);
-            doc.text(`[${appData.fullName || 'Signed'}]`, 105, 284);
+            doc.text(`[${(appData.fullName || 'Signed').substring(0, 12)}]`, 115, 281);
           }
         } else {
           doc.setFontSize(6);
-          doc.text(`[${appData.fullName || 'Signed'}]`, 105, 284);
+          doc.text(`[${(appData.fullName || 'Signed').substring(0, 12)}]`, 115, 281);
         }
 
-        if (appData.ceoSignatureDataUrl) {
+        if (appData.ceoSignatureDataUrl || appData.status === 'approved') {
           doc.setFontSize(7);
           doc.setFont('helvetica', 'bold');
           doc.setTextColor(22, 101, 52);
-          doc.text('CEO Signature:', 150, 279);
-          try {
-            doc.addImage(appData.ceoSignatureDataUrl, 'PNG', 150, 280, 20, 6);
-          } catch (e) {
+          doc.text('CEO Sign:', 155, 277);
+          if (appData.ceoSignatureDataUrl) {
+            try {
+              doc.addImage(appData.ceoSignatureDataUrl, 'PNG', 155, 278, 18, 6);
+            } catch (e) {
+              doc.setFontSize(6);
+              doc.text('[CEO Approved]', 155, 281);
+            }
+          } else {
             doc.setFontSize(6);
-            doc.text('[CEO Approved]', 150, 284);
+            doc.text('[CEO Approved]', 155, 281);
           }
         }
       }
@@ -359,13 +351,9 @@ These Terms & Conditions govern participation in HyperNova Technology.`;
           ${tncHtmlText}
         </div>
 
-        <h3 style="color: #6366f1;">2. LEGAL E-SIGNATURE VERIFICATION</h3>
-        <p>Terms Accepted v1.0 on ${new Date(appData.termsAcceptedAt || Date.now()).toLocaleString()}</p>
-        ${appData.signatureDataUrl ? `<div><p>Applicant Signature:</p><img src="${appData.signatureDataUrl}" style="max-height:60px; background:#fff; padding:5px; border-radius:4px;"/></div>` : ''}
-
-        <h3 style="color: #6366f1; margin-top:20px;">3. APPLICANT PROFILE & SUBMITTED DETAILS</h3>
+        <h3 style="color: #6366f1;">2. APPLICANT PROFILE & SUBMITTED DETAILS</h3>
         <p><strong>Full Name:</strong> ${appData.fullName}</p>
-        <p><strong>Email:</strong> ${appData.email}</p>
+        <p><strong>Email:</strong> ${appData.email || appData.applicantEmail}</p>
         <p><strong>Phone:</strong> ${appData.phone}</p>
         <p><strong>Location:</strong> ${appData.location || 'N/A'}</p>
         <p><strong>GitHub:</strong> ${appData.github}</p>
@@ -375,6 +363,10 @@ These Terms & Conditions govern participation in HyperNova Technology.`;
         <p><strong>Experience:</strong> ${appData.projects || 'N/A'}</p>
         ${appData.primaryDepartmentName ? `<p><strong>Primary Department Preference:</strong> ${appData.primaryDepartmentName}</p>` : ''}
         ${appData.departmentReason ? `<p><strong>Department Opting Rationale:</strong> ${appData.departmentReason}</p>` : ''}
+
+        <h3 style="color: #6366f1; margin-top:20px;">3. LEGAL E-SIGNATURE VERIFICATION</h3>
+        <p>Terms Accepted v1.0 on ${new Date(appData.termsAcceptedAt || Date.now()).toLocaleString()}</p>
+        ${appData.signatureDataUrl ? `<div><p>Applicant Signature:</p><img src="${appData.signatureDataUrl}" style="max-height:60px; background:#fff; padding:5px; border-radius:4px;"/></div>` : ''}
 
         ${(appData.status === 'approved' || appData.ceoSignatureDataUrl) ? `
           <h3 style="color: #22c55e; margin-top:20px;">4. EXECUTIVE CEO APPROVAL & E-SIGNATURE VERIFICATION</h3>
