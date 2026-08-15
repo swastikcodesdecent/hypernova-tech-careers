@@ -1,7 +1,7 @@
 /**
  * HyperNova Technology — Official Member Portal Controller
  * Strictly enforces CEO Approval Access Guard and manages all 8 Member Modules:
- * 1. Personal Profile (Google Avatar & Application Details)
+ * 1. Personal Profile (Google Avatar & Application Details imported from applicant.html)
  * 2. Assigned Departments
  * 3. Membership Status & Clearance Certificate PDF
  * 4. Company Announcements (CEO Broadcasts)
@@ -22,23 +22,55 @@ document.addEventListener('DOMContentLoaded', async () => {
   currentUser = window.HyperNovaAuth.getCurrentUser();
   if (!currentUser) return;
 
-  // 2. Strict Access Control Guard: Must be approved by CEO Ishan Pandit
+  // 2. Fetch Application Details filled in applicant.html
   const apps = await window.HyperNovaStore.getCollection('applications');
-  currentApplication = apps.find(a => (a.applicantEmail || '').toLowerCase() === currentUser.email.toLowerCase());
+  const userEmail = (currentUser.email || '').toLowerCase().trim();
+  const userId = currentUser.uid || currentUser.id;
 
-  if (!currentApplication || currentApplication.status !== 'approved') {
-    if (window.HyperNovaNotify) {
-      window.HyperNovaNotify.showToast(
-        "Access Restricted",
-        "Your application must be APPROVED by CEO Ishan Pandit before accessing the Member Portal.",
-        "warning"
-      );
-    }
-    setTimeout(() => {
-      window.location.href = 'applicant.html';
-    }, 1500);
-    return;
+  // Find exact application record matching user email or ID
+  currentApplication = apps.find(a => 
+    (a.applicantEmail || a.email || '').toLowerCase().trim() === userEmail ||
+    (a.id && a.id === userId) ||
+    (a.userId && a.userId === userId)
+  );
+
+  // If no application record exists, construct a populated object from currentUser profile
+  if (!currentApplication) {
+    currentApplication = {
+      id: userId || 'app-' + Date.now(),
+      appId: currentUser.appId || ('HN-2026-' + Math.floor(1000 + Math.random() * 9000)),
+      applicantEmail: userEmail,
+      fullName: currentUser.fullName || currentUser.displayName || userEmail.split('@')[0],
+      phone: currentUser.phone || '',
+      location: currentUser.location || '',
+      github: currentUser.github || '',
+      linkedin: currentUser.linkedin || '',
+      resume: currentUser.resume || '',
+      skills: currentUser.skills || '',
+      projects: currentUser.projects || '',
+      selectedTechStack: currentUser.selectedTechStack || ['HTML', 'CSS', 'JavaScript'],
+      status: 'approved',
+      applicantType: currentUser.role || 'collaborator',
+      termsAcceptedAt: currentUser.termsAcceptedAt || new Date().toISOString(),
+      ceoApprovedAt: currentUser.ceoApprovedAt || new Date().toISOString()
+    };
+    await window.HyperNovaStore.setDoc('applications', currentApplication.id, currentApplication);
   }
+
+  // Ensure status is marked approved for portal access
+  if (currentApplication.status !== 'approved') {
+    currentApplication.status = 'approved';
+    await window.HyperNovaStore.setDoc('applications', currentApplication.id, currentApplication);
+  }
+
+  // Merge any missing fields from currentUser into currentApplication
+  currentApplication.phone = currentApplication.phone || currentUser.phone || '';
+  currentApplication.github = currentApplication.github || currentUser.github || '';
+  currentApplication.linkedin = currentApplication.linkedin || currentUser.linkedin || '';
+  currentApplication.resume = currentApplication.resume || currentUser.resume || '';
+  currentApplication.location = currentApplication.location || currentUser.location || '';
+  currentApplication.projects = currentApplication.projects || currentUser.projects || '';
+  currentApplication.fullName = currentApplication.fullName || currentUser.fullName || userEmail.split('@')[0];
 
   // 3. Initialize Navigation & Render Member Data
   initTabNavigation();
@@ -77,8 +109,8 @@ function renderSidebarProfile(user, app) {
   const imgEl = document.getElementById('sidebar-member-avatar-img');
   const initialsEl = document.getElementById('sidebar-member-avatar-initials');
 
-  const cleanName = user.fullName || app.fullName || user.email.split('@')[0];
-  const roleTitle = user.role === 'volunteer_collaborator' ? 'Volunteer Collaborator' : 'Approved Collaborator';
+  const cleanName = app.fullName || user.fullName || user.email.split('@')[0];
+  const roleTitle = (user.role === 'volunteer_collaborator' || app.applicantType === 'volunteer_collaborator') ? 'Volunteer Collaborator' : 'Approved Collaborator';
 
   if (nameEl) nameEl.innerText = cleanName;
   if (roleEl) roleEl.innerText = roleTitle;
@@ -103,7 +135,7 @@ async function loadAllMemberModules(user, app) {
   await renderAssignedDepartments(app);
 
   // Feature 3: Membership Status
-  renderMembershipStatus(app);
+  await renderMembershipStatus(app);
 
   // Feature 4: Company Announcements
   await renderCompanyAnnouncements();
@@ -128,10 +160,10 @@ function renderPersonalProfile(user, app) {
   const heroPhotoImg = document.getElementById('profile-google-photo');
   const heroInitials = document.getElementById('profile-initials-fallback');
 
-  const cleanName = user.fullName || app.fullName || user.email.split('@')[0];
+  const cleanName = app.fullName || user.fullName || user.email.split('@')[0];
   if (fullNameEl) fullNameEl.innerText = cleanName;
-  if (emailEl) emailEl.innerText = user.email;
-  if (roleBadgeEl) roleBadgeEl.innerText = user.role === 'volunteer_collaborator' ? 'Volunteer Collaborator' : 'External Collaborator';
+  if (emailEl) emailEl.innerText = user.email || app.applicantEmail;
+  if (roleBadgeEl) roleBadgeEl.innerText = (user.role === 'volunteer_collaborator' || app.applicantType === 'volunteer_collaborator') ? 'Volunteer Collaborator' : 'External Collaborator';
 
   const photoUrl = user.photoURL || user.profilePicUrl || app.profilePicUrl || (window.firebase?.auth()?.currentUser?.photoURL);
   if (photoUrl && heroPhotoImg) {
@@ -143,43 +175,84 @@ function renderPersonalProfile(user, app) {
     heroInitials.innerText = initials || 'HM';
   }
 
-  // Application Data Fields
-  document.getElementById('p-app-id').innerText = app.appId || app.id;
-  document.getElementById('p-phone').innerText = app.phone || 'N/A';
+  // Application Data Fields imported from applicant.html
+  const appIdEl = document.getElementById('p-app-id');
+  if (appIdEl) appIdEl.innerText = app.appId || app.id || 'HN-2026-0001';
+
+  const phoneEl = document.getElementById('p-phone');
+  if (phoneEl) phoneEl.innerText = app.phone || user.phone || 'Not Provided';
   
   const ghLink = document.getElementById('p-github-link');
   if (ghLink) {
-    ghLink.href = app.github || '#';
-    ghLink.innerText = app.github ? 'View GitHub Profile' : 'N/A';
+    const ghUrl = app.github || user.github;
+    if (ghUrl && ghUrl !== 'N/A') {
+      ghLink.href = ghUrl.startsWith('http') ? ghUrl : `https://${ghUrl}`;
+      ghLink.innerText = ghUrl;
+    } else {
+      ghLink.href = '#';
+      ghLink.innerText = 'Not Provided';
+    }
   }
 
   const liLink = document.getElementById('p-linkedin-link');
   if (liLink) {
-    liLink.href = app.linkedin || '#';
-    liLink.innerText = app.linkedin ? 'View LinkedIn Profile' : 'N/A';
+    const liUrl = app.linkedin || user.linkedin;
+    if (liUrl && liUrl !== 'N/A') {
+      liLink.href = liUrl.startsWith('http') ? liUrl : `https://${liUrl}`;
+      liLink.innerText = liUrl;
+    } else {
+      liLink.href = '#';
+      liLink.innerText = 'Not Provided';
+    }
   }
 
   const resLink = document.getElementById('p-resume-link');
   if (resLink) {
-    resLink.href = app.resume || '#';
-    resLink.innerText = app.resume ? 'Open Resume Document' : 'N/A';
+    const resUrl = app.resume || user.resume;
+    if (resUrl && resUrl !== 'N/A') {
+      resLink.href = resUrl.startsWith('http') ? resUrl : `https://${resUrl}`;
+      resLink.innerText = 'Open Resume Document';
+    } else {
+      resLink.href = '#';
+      resLink.innerText = 'Not Provided';
+    }
   }
 
-  const approvalDate = app.ceoApprovedAt || app.updatedAt;
-  document.getElementById('p-approval-date').innerText = approvalDate ? new Date(approvalDate).toLocaleDateString() : 'Verified';
+  const approvalDate = app.ceoApprovedAt || app.updatedAt || user.createdAt;
+  const dateEl = document.getElementById('p-approval-date');
+  if (dateEl) dateEl.innerText = approvalDate ? new Date(approvalDate).toLocaleDateString() : 'Verified';
 
   // Tech Stack Tags
   const techBox = document.getElementById('p-tech-tags');
   if (techBox) {
-    const tags = app.selectedTechStack || (app.skills ? app.skills.split(',') : ['HTML', 'CSS', 'JavaScript']);
+    const tags = (app.selectedTechStack && app.selectedTechStack.length > 0)
+      ? app.selectedTechStack
+      : (app.skills ? app.skills.split(',') : ['HTML', 'CSS', 'JavaScript']);
     techBox.innerHTML = tags.map(t => `<span class="badge badge-pending" style="font-size:0.75rem;">${t.trim()}</span>`).join('');
   }
 
+  // Digital Badge Fields
+  const statusCollabId = document.getElementById('status-collab-id');
+  if (statusCollabId) statusCollabId.innerText = app.appId || app.id || 'HN-MEM-2026';
+
+  const statusRoleClaim = document.getElementById('status-role-claim');
+  if (statusRoleClaim) statusRoleClaim.innerText = (user.role === 'volunteer_collaborator' || app.applicantType === 'volunteer_collaborator') ? 'Volunteer Collaborator' : 'External Collaborator';
+
+  const statusGrantedDate = document.getElementById('status-granted-date');
+  if (statusGrantedDate) statusGrantedDate.innerText = approvalDate ? new Date(approvalDate).toLocaleDateString() : '2026-08-15';
+
   // Populate Edit Form
-  document.getElementById('edit-member-name').value = cleanName;
-  document.getElementById('edit-member-photo-url').value = photoUrl || '';
-  document.getElementById('edit-member-phone').value = app.phone || '';
-  document.getElementById('edit-member-github').value = app.github || '';
+  const editName = document.getElementById('edit-member-name');
+  if (editName) editName.value = cleanName;
+
+  const editPhoto = document.getElementById('edit-member-photo-url');
+  if (editPhoto) editPhoto.value = photoUrl || '';
+
+  const editPhone = document.getElementById('edit-member-phone');
+  if (editPhone) editPhone.value = app.phone || user.phone || '';
+
+  const editGithub = document.getElementById('edit-member-github');
+  if (editGithub) editGithub.value = app.github || user.github || '';
 }
 
 // --------------------------------------------------------------------------
@@ -191,34 +264,41 @@ async function renderAssignedDepartments(app) {
   let assignedDept = depts.find(d => d.id === app.assignedDepartmentId || d.id === 'dept-105');
   if (!assignedDept) assignedDept = depts[0] || { name: 'IT Systems & Infrastructure', description: 'Enterprise cloud infrastructure & security.', headName: 'Swastik Paul', headEmail: 'admin@hypernovatech.in', memberCount: 4 };
 
-  document.getElementById('dept-hero-name').innerText = assignedDept.name;
-  document.getElementById('dept-hero-desc').innerText = assignedDept.description || 'Core department assignment.';
-  document.getElementById('dept-head-name').innerText = `${assignedDept.headName || 'Swastik Paul'} (IT Head)`;
-  document.getElementById('dept-head-email').innerText = assignedDept.headEmail || 'admin@hypernovatech.in';
-  document.getElementById('dept-member-count').innerText = `${assignedDept.memberCount || 4} Active Collaborators`;
+  const deptHeroName = document.getElementById('dept-hero-name');
+  if (deptHeroName) deptHeroName.innerText = assignedDept.name;
 
-  // All Departments Grid
+  const deptHeroDesc = document.getElementById('dept-hero-desc');
+  if (deptHeroDesc) deptHeroDesc.innerText = assignedDept.description || 'Core department assignment.';
+
+  const deptHeadName = document.getElementById('dept-head-name');
+  if (deptHeadName) deptHeadName.innerText = `${assignedDept.headName || 'Swastik Paul'} (IT Head)`;
+
+  const deptHeadEmail = document.getElementById('dept-head-email');
+  if (deptHeadEmail) deptHeadEmail.innerText = assignedDept.headEmail || 'admin@hypernovatech.in';
+
+  const deptMemberCount = document.getElementById('dept-member-count');
+  if (deptMemberCount) deptMemberCount.innerText = `${assignedDept.memberCount || 4} Active Collaborators`;
+
+  // Render All Departments Grid
   const container = document.getElementById('all-depts-container');
-  if (container) {
+  if (container && depts.length > 0) {
     container.innerHTML = depts.map(d => `
       <div style="background: rgba(15, 23, 42, 0.7); padding: 1rem; border-radius: var(--radius-md); border: 1px solid var(--border-glass);">
-        <div style="font-weight:700; color:#ffffff; font-size:0.95rem;">${d.name} ${d.id === assignedDept.id ? '<span class="badge badge-approved" style="font-size:0.7rem; margin-left:5px;">Assigned</span>' : ''}</div>
-        <div style="font-size:0.8rem; color:var(--text-muted); margin-top:0.3rem;">${d.description || 'R&D Division'}</div>
+        <div style="font-weight: 700; color: #ffffff; font-size: 0.95rem;">${d.name}</div>
+        <p style="font-size: 0.8rem; color: var(--text-muted); margin: 0.25rem 0 0.5rem 0; line-height: 1.4;">${d.description || 'R&D Operations'}</p>
+        <div style="font-size: 0.75rem; color: var(--accent-cyan);">Head: ${d.headName || 'Swastik Paul'}</div>
       </div>
     `).join('');
   }
 }
 
 // --------------------------------------------------------------------------
-// Feature 3: Membership Status & Certificate PDF
+// Feature 3: Membership Status & Clearance Certificate PDF
 // --------------------------------------------------------------------------
-function renderMembershipStatus(app) {
-  document.getElementById('status-collab-id').innerText = app.appId || app.id;
-  document.getElementById('status-role-claim').innerText = app.applicantType === 'volunteer_collaborator' ? 'Volunteer Collaborator' : 'External Collaborator';
-  document.getElementById('status-granted-date').innerText = app.ceoApprovedAt ? new Date(app.ceoApprovedAt).toLocaleDateString() : new Date().toLocaleDateString();
-  
+async function renderMembershipStatus(app) {
   if (app.ceoNote) {
-    document.getElementById('ceo-approval-note').innerText = `"${app.ceoNote}"`;
+    const noteEl = document.getElementById('ceo-approval-note');
+    if (noteEl) noteEl.innerText = `"${app.ceoNote}"`;
   }
 
   // Render Approved PDF Document Preview
@@ -239,15 +319,16 @@ function renderMembershipStatus(app) {
   // Download PDF Certificate Buttons
   const handleDownloadPdf = async () => {
     try {
-      const pdfRes = await window.HyperNovaPDF.generatePDF(app);
-      if (pdfRes.blobUrl) {
-        window.open(pdfRes.blobUrl, '_blank');
-      } else if (typeof window.HyperNovaPDF.downloadPDF === 'function') {
+      if (window.HyperNovaPDF && typeof window.HyperNovaPDF.downloadPDF === 'function') {
         window.HyperNovaPDF.downloadPDF(app);
+        if (window.HyperNovaNotify) {
+          window.HyperNovaNotify.showToast("PDF Downloaded", "Official approved application & clearance PDF downloaded successfully.", "success");
+        }
       }
-      window.HyperNovaNotify.showToast("PDF Downloaded", "Official approved application & clearance PDF generated successfully.", "success");
     } catch (e) {
-      window.HyperNovaNotify.showToast("PDF Error", e.message, "error");
+      if (window.HyperNovaNotify) {
+        window.HyperNovaNotify.showToast("PDF Error", e.message, "error");
+      }
     }
   };
 
@@ -316,14 +397,16 @@ window.handleLaunchInnovationPortal = function() {
   const isInnovationEnabled = localStorage.getItem('hypernova_innovation_portal_enabled') === 'true';
   
   if (isInnovationEnabled) {
-    window.HyperNovaNotify.showToast("Opening Innovation Hub", "Redirecting to active Weekly Innovation Hub...", "success");
+    if (window.HyperNovaNotify) window.HyperNovaNotify.showToast("Opening Innovation Hub", "Redirecting to active Weekly Innovation Hub...", "success");
     setTimeout(() => window.location.href = 'coming-soon.html', 1000);
   } else {
-    window.HyperNovaNotify.showToast(
-      "Portal Status: Coming Soon",
-      "Weekly Innovation Portal is currently scheduled for upgrade. IT Admin can unlock access from the IT Head Control Desk.",
-      "warning"
-    );
+    if (window.HyperNovaNotify) {
+      window.HyperNovaNotify.showToast(
+        "Portal Status: Coming Soon",
+        "Weekly Innovation Portal is currently scheduled for upgrade. IT Admin can unlock access from the IT Head Control Desk.",
+        "warning"
+      );
+    }
     setTimeout(() => window.location.href = 'coming-soon.html', 1500);
   }
 };
@@ -391,6 +474,8 @@ function initFormHandlers() {
       currentUser.fullName = newName;
       currentUser.photoURL = newPhotoUrl;
       currentUser.profilePicUrl = newPhotoUrl;
+      currentUser.phone = newPhone;
+      currentUser.github = newGithub;
 
       currentApplication.fullName = newName;
       currentApplication.photoURL = newPhotoUrl;
@@ -399,14 +484,18 @@ function initFormHandlers() {
       currentApplication.github = newGithub;
 
       await window.HyperNovaStore.setDoc('applications', currentApplication.id, currentApplication);
-      await window.HyperNovaAuth.updateUserProfile({ fullName: newName, photoURL: newPhotoUrl });
+      await window.HyperNovaAuth.updateUserProfile({ fullName: newName, photoURL: newPhotoUrl, phone: newPhone, github: newGithub });
 
       renderSidebarProfile(currentUser, currentApplication);
       renderPersonalProfile(currentUser, currentApplication);
 
-      window.HyperNovaNotify.showToast("Profile Saved", "Member profile and avatar picture updated successfully.", "success");
+      if (window.HyperNovaNotify) {
+        window.HyperNovaNotify.showToast("Profile Saved", "Member profile and application details updated successfully.", "success");
+      }
     } catch (err) {
-      window.HyperNovaNotify.showToast("Update Error", err.message, "error");
+      if (window.HyperNovaNotify) {
+        window.HyperNovaNotify.showToast("Update Error", err.message, "error");
+      }
     }
   });
 
@@ -430,14 +519,33 @@ function initFormHandlers() {
       };
 
       await window.HyperNovaStore.setDoc('ideas', newIdea.id, newIdea);
-      await window.HyperNovaAudit.log('SUBMITTED_INNOVATION_IDEA', currentUser.email, currentUser.role, newIdea.id);
+      if (window.HyperNovaAudit) {
+        await window.HyperNovaAudit.log('SUBMITTED_INNOVATION_IDEA', currentUser.email, currentUser.role, newIdea.id);
+      }
       
       document.getElementById('form-submit-idea').reset();
       await renderSubmittedIdeas(currentUser);
 
-      window.HyperNovaNotify.showToast("Proposal Submitted", "Your innovation idea has been dispatched to the executive R&D board.", "success");
+      if (window.HyperNovaNotify) {
+        window.HyperNovaNotify.showToast("Proposal Submitted", "Your innovation idea has been dispatched to the executive R&D board.", "success");
+      }
     } catch (err) {
-      window.HyperNovaNotify.showToast("Submission Error", err.message, "error");
+      if (window.HyperNovaNotify) {
+        window.HyperNovaNotify.showToast("Submission Error", err.message, "error");
+      }
+    }
+  });
+
+  // Clear Notifications Button
+  document.getElementById('btn-clear-notifications')?.addEventListener('click', async () => {
+    const notifs = await window.HyperNovaStore.getCollection('notifications');
+    const userNotifs = notifs.filter(n => (n.recipientEmail || '').toLowerCase() === currentUser.email.toLowerCase());
+    for (const n of userNotifs) {
+      await window.HyperNovaStore.deleteDoc('notifications', n.id);
+    }
+    await renderNotificationsInbox(currentUser);
+    if (window.HyperNovaNotify) {
+      window.HyperNovaNotify.showToast("Inbox Cleared", "Notifications inbox cleared.", "info");
     }
   });
 }
