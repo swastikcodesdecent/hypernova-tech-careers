@@ -226,10 +226,10 @@ function renderMembershipStatus(app) {
     const pdfRes = await window.HyperNovaPDF.generatePDF(app);
     const iframe = document.getElementById('member-pdf-viewer-iframe');
     if (iframe && pdfRes) {
-      if (pdfRes.dataUrl) {
-        iframe.src = pdfRes.dataUrl;
-      } else if (pdfRes.blobUrl) {
-        iframe.src = pdfRes.blobUrl;
+      if (pdfRes.htmlContent) {
+        iframe.srcdoc = pdfRes.htmlContent;
+      } else {
+        iframe.src = pdfRes.blobUrl || pdfRes.dataUrl;
       }
     }
   } catch (err) {
