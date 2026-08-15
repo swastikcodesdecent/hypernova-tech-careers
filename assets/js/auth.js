@@ -341,7 +341,7 @@ class AuthManager {
           const apps = await window.HyperNovaStore.getCollection('applications');
           const userApp = apps.find(a => (a.applicantEmail || '').toLowerCase() === this.currentUser.email.toLowerCase());
           if (userApp && userApp.status === 'approved') {
-            window.location.href = 'coming-soon.html';
+            window.location.href = 'member.html';
             return;
           }
         } catch (e) {
