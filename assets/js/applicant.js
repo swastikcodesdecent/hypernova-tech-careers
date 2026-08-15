@@ -846,3 +846,27 @@ function saveTechProfileFields() {
   currentApplication.resume = document.getElementById('tech-resume')?.value || '';
   currentApplication.projects = document.getElementById('tech-projects')?.value || '';
 }
+
+function renderDedicatedPDFTab(app) {
+  if (!app) return;
+  const idEl = document.getElementById('tab-pdf-appid');
+  const dateEl = document.getElementById('tab-pdf-date');
+  const statusEl = document.getElementById('tab-pdf-status');
+
+  if (idEl) idEl.innerText = app.appId || 'HN-2026-XXXX';
+  if (dateEl) dateEl.innerText = app.submittedAt ? new Date(app.submittedAt).toLocaleDateString() : 'Not Submitted';
+  if (statusEl) {
+    if (app.status === 'approved') {
+      statusEl.innerText = 'Approved & Validated';
+      statusEl.className = 'badge badge-approved';
+    } else if (app.status === 'pending_ceo_review') {
+      statusEl.innerText = 'Pending CEO Review';
+      statusEl.className = 'badge badge-pending';
+    } else {
+      statusEl.innerText = 'Draft Application';
+      statusEl.className = 'badge badge-draft';
+    }
+  }
+
+  renderPDFPreview(app, 'pdf-viewer-iframe-dedicated');
+}
