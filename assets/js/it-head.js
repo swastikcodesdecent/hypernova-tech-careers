@@ -287,11 +287,29 @@ document.addEventListener('DOMContentLoaded', async () => {
   // Issue Notice Form Submit Handler
   document.getElementById('form-it-issue-notice')?.addEventListener('submit', (e) => handleIssueITNotice(e, user));
 
+  // Applications Desk Filter Listeners
+  document.getElementById('it-search-apps')?.addEventListener('input', () => renderITApplicationsTable());
+  document.getElementById('it-filter-app-role')?.addEventListener('change', () => renderITApplicationsTable());
+  document.getElementById('it-filter-app-status')?.addEventListener('change', () => renderITApplicationsTable());
+
+  // Download Inspector PDF Button
+  document.getElementById('btn-it-insp-download-pdf')?.addEventListener('click', () => {
+    if (selectedApplicationForITInspector && window.HyperNovaPDF) {
+      window.HyperNovaPDF.downloadPDF(selectedApplicationForITInspector);
+      if (window.HyperNovaNotify) {
+        window.HyperNovaNotify.showToast("PDF Downloaded", `Downloaded PDF for ${selectedApplicationForITInspector.fullName || selectedApplicationForITInspector.appId}`, "success");
+      }
+    }
+  });
+
   // Logout Button
   document.getElementById('btn-it-logout')?.addEventListener('click', () => {
     window.HyperNovaAuth.logout();
   });
 });
+
+let allApplications = [];
+let selectedApplicationForITInspector = null;
 
 async function refreshITHeadData() {
   allTickets = await window.HyperNovaSupport.getAllTickets();
@@ -300,7 +318,124 @@ async function refreshITHeadData() {
   renderAccountsPurgeTable();
   renderITNoticesTable();
   renderITBroadcastNotifications();
+  await loadITApplications();
 }
+
+async function loadITApplications() {
+  allApplications = await window.HyperNovaStore.getCollection('applications');
+  renderITApplicationsCounters();
+  renderITApplicationsTable();
+}
+
+function renderITApplicationsCounters() {
+  const totalEl = document.getElementById('it-count-total-apps');
+  const pendingEl = document.getElementById('it-count-pending-apps');
+  const approvedEl = document.getElementById('it-count-approved-apps');
+  const volunteerEl = document.getElementById('it-count-volunteer-apps');
+
+  if (totalEl) totalEl.innerText = allApplications.length;
+  if (pendingEl) pendingEl.innerText = allApplications.filter(a => a.status === 'pending_ceo_review').length;
+  if (approvedEl) approvedEl.innerText = allApplications.filter(a => a.status === 'approved').length;
+  if (volunteerEl) volunteerEl.innerText = allApplications.filter(a => a.applicantType === 'volunteer_collaborator').length;
+}
+
+function renderITApplicationsTable() {
+  const tbody = document.getElementById('it-applications-tbody');
+  if (!tbody) return;
+
+  const searchText = (document.getElementById('it-search-apps')?.value || '').toLowerCase().trim();
+  const roleFilter = document.getElementById('it-filter-app-role')?.value || 'all';
+  const statusFilter = document.getElementById('it-filter-app-status')?.value || 'all';
+
+  let filtered = allApplications.filter(a => {
+    const matchSearch = !searchText ||
+                        (a.fullName || '').toLowerCase().includes(searchText) ||
+                        (a.applicantEmail || '').toLowerCase().includes(searchText) ||
+                        (a.appId || '').toLowerCase().includes(searchText);
+    const matchRole = roleFilter === 'all' || a.applicantType === roleFilter;
+    const matchStatus = statusFilter === 'all' || a.status === statusFilter;
+    return matchSearch && matchRole && matchStatus;
+  });
+
+  if (filtered.length === 0) {
+    tbody.innerHTML = `<tr><td colspan="6" style="text-align:center; color:var(--text-dim); padding:2rem;">No matching candidate applications found.</td></tr>`;
+    return;
+  }
+
+  tbody.innerHTML = filtered.map(a => {
+    let badgeClass = 'badge-draft';
+    if (a.status === 'pending_ceo_review') badgeClass = 'badge-pending';
+    if (a.status === 'approved') badgeClass = 'badge-approved';
+    if (a.status === 'rejected') badgeClass = 'badge-rejected';
+
+    return `
+      <tr>
+        <td><strong>${a.appId || 'HN-2026-XXXX'}</strong></td>
+        <td>
+          <div style="font-weight:600; color:#fff;">${a.fullName || a.applicantEmail}</div>
+          <div style="font-size:0.8rem; color:var(--text-muted);">${a.applicantEmail || a.email}</div>
+        </td>
+        <td><span class="badge badge-role">${a.applicantType === 'volunteer_collaborator' ? 'Volunteer' : 'Collaborator'}</span></td>
+        <td>${a.submittedAt ? new Date(a.submittedAt).toLocaleDateString() : 'Draft / Unsubmitted'}</td>
+        <td><span class="badge ${badgeClass}">${(a.status || 'draft').replace('_', ' ')}</span></td>
+        <td>
+          <button class="btn btn-secondary btn-sm" onclick="openITAppInspector('${a.id}')">Inspect & PDF</button>
+        </td>
+      </tr>
+    `;
+  }).join('');
+}
+
+window.openITAppInspector = async function(docId) {
+  const app = allApplications.find(a => a.id === docId);
+  if (!app) return;
+
+  selectedApplicationForITInspector = app;
+
+  document.getElementById('it-insp-app-title').innerText = `Inspect Application: ${app.appId || 'HN-2026-XXXX'}`;
+  document.getElementById('it-insp-name').innerText = app.fullName || 'N/A';
+  document.getElementById('it-insp-email').innerText = app.applicantEmail || app.email || 'N/A';
+  document.getElementById('it-insp-phone').innerText = app.phone || 'N/A';
+  document.getElementById('it-insp-location').innerText = app.location || 'N/A';
+
+  const ghLink = document.getElementById('it-insp-github');
+  if (ghLink) { ghLink.href = app.github || '#'; ghLink.innerText = app.github || 'N/A'; }
+
+  const liLink = document.getElementById('it-insp-linkedin');
+  if (liLink) { liLink.href = app.linkedin || '#'; liLink.innerText = app.linkedin || 'N/A'; }
+
+  const resLink = document.getElementById('it-insp-resume');
+  if (resLink) { resLink.href = app.resume || '#'; resLink.innerText = app.resume || 'N/A'; }
+
+  document.getElementById('it-insp-techstack').innerText = (app.selectedTechStack || []).join(', ') || app.skills || 'None Selected';
+  document.getElementById('it-insp-projects').innerText = app.projects || 'N/A';
+
+  const deptSec = document.getElementById('it-insp-dept-sec');
+  if (app.applicantType === 'volunteer_collaborator') {
+    if (deptSec) deptSec.style.display = 'block';
+    document.getElementById('it-insp-primary-dept').innerText = app.primaryDepartmentName || 'N/A';
+    document.getElementById('it-insp-dept-reason').innerText = app.departmentReason || 'N/A';
+  } else if (deptSec) {
+    deptSec.style.display = 'none';
+  }
+
+  // Generate & render PDF Preview inside iframe
+  try {
+    const pdfRes = await window.HyperNovaPDF.generatePDF(app);
+    const iframe = document.getElementById('it-insp-pdf-iframe');
+    if (iframe && pdfRes) {
+      if (pdfRes.dataUrl) {
+        iframe.src = pdfRes.dataUrl;
+      } else if (pdfRes.blobUrl) {
+        iframe.src = pdfRes.blobUrl;
+      }
+    }
+  } catch (err) {
+    console.warn("IT Inspector PDF generation error:", err);
+  }
+
+  window.openModal('modal-it-app-inspector');
+};
 
 function renderTicketsTable() {
   const tbody = document.getElementById('it-tickets-tbody');
@@ -486,6 +621,7 @@ function initTabNavigation() {
     'tab-it-assistance-2': { title: 'IT Assistance 2 — Member Support Tickets Desk', sub: 'All support tickets generated by respective members are displayed and managed here.' },
     'tab-it-assistance-1': { title: 'IT Assistance 1 — Account & Security Recovery', sub: 'Dispatch secure Firebase password recovery links and manage user account recovery requests.' },
     'tab-it-access': { title: 'Access Control & System Operations Guard', sub: 'Locks all collaborator pages into Maintenance Mode while preserving Executive Access for CEO & IT Operations.' },
+    'tab-it-applications': { title: 'Candidate Applications & Submissions Desk', sub: 'Inspect, filter, and review submitted collaborator & volunteer application records and generated PDFs.' },
     'tab-it-appearances': { title: 'Portal Appearance & Theme Control', sub: 'Control Independence Day theme animation & aesthetics across all portals.' },
     'tab-it-notice': { title: 'External Issue Notice Portal', sub: 'Redirecting to external issue notice desk...' },
     'tab-it-account': { title: 'IT Head Account & Security Settings', sub: 'Update profile picture link, full name, and change access cipher password.' }
