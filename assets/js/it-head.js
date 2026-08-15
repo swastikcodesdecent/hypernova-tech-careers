@@ -302,6 +302,64 @@ document.addEventListener('DOMContentLoaded', async () => {
     }
   });
 
+  // Initialize IT Head E-Signature Pad
+  if (window.HyperNovaSignaturePad && document.getElementById('canvas-it-signature')) {
+    itSigPad = new window.HyperNovaSignaturePad('canvas-it-signature', { color: '#38bdf8', lineWidth: 2.5 });
+  }
+
+  // Clear IT Signature Button
+  document.getElementById('btn-clear-it-sig')?.addEventListener('click', () => {
+    if (itSigPad) itSigPad.clear();
+  });
+
+  // Save IT Technical Clearance & E-Sign PDF Button
+  document.getElementById('btn-save-it-clearance')?.addEventListener('click', async () => {
+    if (!selectedApplicationForITInspector) return;
+    const app = selectedApplicationForITInspector;
+    const sigUrl = itSigPad ? itSigPad.getSignatureDataUrl() : null;
+
+    if (!sigUrl && !app.itSignatureDataUrl) {
+      if (window.HyperNovaNotify) {
+        window.HyperNovaNotify.showToast("Signature Required", "Please draw your IT Operations E-Signature on the pad.", "warning");
+      }
+      return;
+    }
+
+    app.itSignatureDataUrl = sigUrl || app.itSignatureDataUrl;
+    app.itApprovedAt = app.itApprovedAt || new Date().toISOString();
+    app.itHeadName = 'Swastik Paul (IT Operations Head)';
+
+    await window.HyperNovaStore.setDoc('applications', app.id, app);
+
+    if (window.HyperNovaAudit) {
+      const itUser = window.HyperNovaAuth.getCurrentUser();
+      await window.HyperNovaAudit.log('IT_HEAD_SIGNED_APPLICATION', itUser ? itUser.email : 'admin@hypernovatech.in', 'it_head', app.id, { appId: app.appId });
+    }
+
+    try {
+      const pdfRes = await window.HyperNovaPDF.generatePDF(app);
+      const iframe = document.getElementById('it-insp-pdf-iframe');
+      if (iframe && pdfRes) {
+        if (pdfRes.dataUrl) iframe.src = pdfRes.dataUrl;
+        else if (pdfRes.blobUrl) iframe.src = pdfRes.blobUrl;
+      }
+    } catch (err) {
+      console.warn("IT Clearance PDF render error:", err);
+    }
+
+    if (window.HyperNovaNotify) {
+      window.HyperNovaNotify.showToast("IT Clearance Stamped", `Technical E-Signature attached to ${app.appId || 'application'}!`, "success");
+    }
+
+    const badge = document.getElementById('it-sig-status-badge');
+    if (badge) {
+      badge.innerText = '✓ Technical Sign-off Executed';
+      badge.className = 'badge badge-approved';
+    }
+
+    await loadITApplications();
+  });
+
   // Logout Button
   document.getElementById('btn-it-logout')?.addEventListener('click', () => {
     window.HyperNovaAuth.logout();
@@ -310,6 +368,7 @@ document.addEventListener('DOMContentLoaded', async () => {
 
 let allApplications = [];
 let selectedApplicationForITInspector = null;
+let itSigPad = null;
 
 async function refreshITHeadData() {
   allTickets = await window.HyperNovaSupport.getAllTickets();
@@ -417,6 +476,29 @@ window.openITAppInspector = async function(docId) {
     document.getElementById('it-insp-dept-reason').innerText = app.departmentReason || 'N/A';
   } else if (deptSec) {
     deptSec.style.display = 'none';
+  }
+
+  const sigBadge = document.getElementById('it-sig-status-badge');
+  if (app.itSignatureDataUrl || app.itApprovedAt) {
+    if (sigBadge) {
+      sigBadge.innerText = '✓ Technical Sign-off Executed';
+      sigBadge.className = 'badge badge-approved';
+    }
+  } else if (sigBadge) {
+    sigBadge.innerText = 'IT Operations Sign-off';
+    sigBadge.className = 'badge badge-pending';
+  }
+
+  // Load signature into canvas pad
+  if (itSigPad) {
+    setTimeout(() => {
+      itSigPad.resizeCanvas(true);
+      if (app.itSignatureDataUrl) {
+        itSigPad.loadSignatureDataUrl(app.itSignatureDataUrl);
+      } else {
+        itSigPad.clear();
+      }
+    }, 150);
   }
 
   // Generate & render PDF Preview inside iframe
