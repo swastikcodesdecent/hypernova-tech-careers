@@ -221,16 +221,38 @@ function renderMembershipStatus(app) {
     document.getElementById('ceo-approval-note').innerText = `"${app.ceoNote}"`;
   }
 
-  // Download PDF Certificate Button
-  document.getElementById('btn-download-member-pdf')?.addEventListener('click', async () => {
+  // Render Approved PDF Document Preview
+  try {
+    const pdfRes = await window.HyperNovaPDF.generatePDF(app);
+    const iframe = document.getElementById('member-pdf-viewer-iframe');
+    if (iframe && pdfRes) {
+      if (pdfRes.dataUrl) {
+        iframe.src = pdfRes.dataUrl;
+      } else if (pdfRes.blobUrl) {
+        iframe.src = pdfRes.blobUrl;
+      }
+    }
+  } catch (err) {
+    console.warn("Error rendering approved member PDF:", err);
+  }
+
+  // Download PDF Certificate Buttons
+  const handleDownloadPdf = async () => {
     try {
       const pdfRes = await window.HyperNovaPDF.generatePDF(app);
-      window.open(pdfRes.blobUrl, '_blank');
-      window.HyperNovaNotify.showToast("Certificate Generated", "Official membership certificate PDF generated successfully.", "success");
+      if (pdfRes.blobUrl) {
+        window.open(pdfRes.blobUrl, '_blank');
+      } else if (typeof window.HyperNovaPDF.downloadPDF === 'function') {
+        window.HyperNovaPDF.downloadPDF(app);
+      }
+      window.HyperNovaNotify.showToast("PDF Downloaded", "Official approved application & clearance PDF generated successfully.", "success");
     } catch (e) {
       window.HyperNovaNotify.showToast("PDF Error", e.message, "error");
     }
-  });
+  };
+
+  document.getElementById('btn-download-member-pdf')?.addEventListener('click', handleDownloadPdf);
+  document.getElementById('btn-download-member-pdf-top')?.addEventListener('click', handleDownloadPdf);
 }
 
 // --------------------------------------------------------------------------
