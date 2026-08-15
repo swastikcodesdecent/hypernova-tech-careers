@@ -473,7 +473,72 @@ class ApplicationPDFGenerator {
       const blob = doc.output('blob');
       const blobUrl = URL.createObjectURL(blob);
       const dataUrl = doc.output('datauristring');
-      return { doc, blob, blobUrl, dataUrl };
+
+      const tncHtmlText = ((window.HYPERNOVA_TNC_TEXT && window.HYPERNOVA_TNC_TEXT.length > 200) ? window.HYPERNOVA_TNC_TEXT : DEFAULT_HYPERNOVA_TNC_TEXT).replace(/\n/g, '<br>');
+      const htmlContent = `
+        <div style="font-family: system-ui, -apple-system, sans-serif; padding: 24px; background: #0b0f19; color: #f8fafc; line-height: 1.5;">
+          <div style="background: rgba(15, 23, 42, 0.9); padding: 20px; border-radius: 12px; border: 1px solid rgba(56, 189, 248, 0.3); margin-bottom: 24px;">
+            <div style="display: flex; justify-content: space-between; align-items: center;">
+              <div>
+                <h2 style="color: #38bdf8; margin: 0; font-size: 20px; font-weight: 800;">HYPERNOVA TECHNOLOGY</h2>
+                <p style="color: #94a3b8; margin: 4px 0 0 0; font-size: 13px;">Official Careers & Collaboration Document</p>
+              </div>
+              <div style="background: rgba(56, 189, 248, 0.15); color: #38bdf8; padding: 6px 14px; border-radius: 20px; font-weight: 700; font-size: 12px;">
+                ID: ${appData.appId || 'HN-2026-0000'}
+              </div>
+            </div>
+          </div>
+
+          <h3 style="color: #818cf8; border-bottom: 1px solid rgba(129, 140, 248, 0.3); padding-bottom: 6px; font-size: 15px; margin-top: 20px;">1. TERMS & CONDITIONS OF HYPERNOVA TECHNOLOGY</h3>
+          <div style="font-size: 12px; color: #cbd5e1; background: rgba(15, 23, 42, 0.7); padding: 14px; border-radius: 8px; max-height: 180px; overflow-y: auto; line-height: 1.6; border: 1px solid rgba(255,255,255,0.08); margin-bottom: 20px;">
+            ${tncHtmlText}
+          </div>
+
+          <h3 style="color: #818cf8; border-bottom: 1px solid rgba(129, 140, 248, 0.3); padding-bottom: 6px; font-size: 15px;">2. APPLICANT PROFILE & SUBMITTED DETAILS</h3>
+          <div style="background: rgba(15, 23, 42, 0.7); padding: 14px; border-radius: 8px; font-size: 13px; display: grid; gap: 8px; border: 1px solid rgba(255,255,255,0.08);">
+            <div><strong style="color:#94a3b8;">Full Name:</strong> ${appData.fullName || appData.applicantEmail}</div>
+            <div><strong style="color:#94a3b8;">Email Address:</strong> ${appData.applicantEmail || appData.email}</div>
+            <div><strong style="color:#94a3b8;">Phone Number:</strong> ${appData.phone || 'N/A'}</div>
+            <div><strong style="color:#94a3b8;">Location / City:</strong> ${appData.location || 'N/A'}</div>
+            <div><strong style="color:#94a3b8;">GitHub Profile:</strong> ${appData.github || 'N/A'}</div>
+            <div><strong style="color:#94a3b8;">LinkedIn Profile:</strong> ${appData.linkedin || 'N/A'}</div>
+            <div><strong style="color:#94a3b8;">Resume Link:</strong> ${appData.resume || 'N/A'}</div>
+            <div><strong style="color:#94a3b8;">Tech Stack:</strong> ${(appData.selectedTechStack && appData.selectedTechStack.length > 0) ? appData.selectedTechStack.join(', ') : (appData.skills || 'N/A')}</div>
+            <div><strong style="color:#94a3b8;">Projects / Experience:</strong> ${appData.projects || 'N/A'}</div>
+            ${appData.primaryDepartmentName ? `<div><strong style="color:#94a3b8;">Primary Department Preference:</strong> ${appData.primaryDepartmentName}</div>` : ''}
+            ${appData.departmentReason ? `<div><strong style="color:#94a3b8;">Department Opting Rationale:</strong> ${appData.departmentReason}</div>` : ''}
+          </div>
+
+          <h3 style="color: #818cf8; border-bottom: 1px solid rgba(129, 140, 248, 0.3); padding-bottom: 6px; font-size: 15px; margin-top: 24px;">3. LEGAL VERIFICATION & E-SIGNATURE</h3>
+          <div style="background: rgba(15, 23, 42, 0.7); padding: 14px; border-radius: 8px; font-size: 13px; border: 1px solid rgba(255,255,255,0.08);">
+            <div><strong style="color:#94a3b8;">Terms Accepted Timestamp:</strong> ${new Date(appData.termsAcceptedAt || Date.now()).toLocaleString()}</div>
+            ${appData.signatureDataUrl ? `<div style="margin-top: 10px;"><strong style="color:#94a3b8; display:block; margin-bottom: 4px;">Applicant E-Signature:</strong><img src="${appData.signatureDataUrl}" style="max-height: 50px; background: #fff; padding: 4px; border-radius: 4px;"/></div>` : ''}
+          </div>
+
+          ${(appData.status === 'approved' || appData.ceoSignatureDataUrl) ? `
+            <h3 style="color: #4ade80; border-bottom: 1px solid rgba(74, 222, 128, 0.3); padding-bottom: 6px; font-size: 15px; margin-top: 24px;">4. EXECUTIVE CEO APPROVAL & VERIFICATION</h3>
+            <div style="background: rgba(34, 197, 94, 0.1); border: 1px solid rgba(34, 197, 94, 0.3); padding: 14px; border-radius: 8px; font-size: 13px;">
+              <div style="color: #4ade80; font-weight: 700; margin-bottom: 4px;">Executive Approver: Ishan Pandit (Founder & CEO)</div>
+              <div><strong>Status:</strong> APPROVED & VALIDATED</div>
+              <div><strong>Approved Date:</strong> ${appData.ceoApprovedAt ? new Date(appData.ceoApprovedAt).toLocaleString() : new Date().toLocaleString()}</div>
+              ${appData.assignedDepartmentName ? `<div><strong>Assigned Department:</strong> ${appData.assignedDepartmentName}</div>` : ''}
+              ${appData.ceoSignatureDataUrl ? `<div style="margin-top: 10px;"><strong>CEO E-Signature:</strong><br/><img src="${appData.ceoSignatureDataUrl}" style="max-height: 48px; background: #fff; padding: 4px; border-radius: 4px; margin-top: 4px;"/></div>` : ''}
+            </div>
+          ` : ''}
+
+          ${(appData.itSignatureDataUrl || appData.itApprovedAt) ? `
+            <h3 style="color: #38bdf8; border-bottom: 1px solid rgba(56, 189, 248, 0.3); padding-bottom: 6px; font-size: 15px; margin-top: 24px;">5. IT TECHNICAL CLEARANCE & E-SIGNATURE</h3>
+            <div style="background: rgba(56, 189, 248, 0.1); border: 1px solid rgba(56, 189, 248, 0.3); padding: 14px; border-radius: 8px; font-size: 13px;">
+              <div style="color: #38bdf8; font-weight: 700; margin-bottom: 4px;">IT Operations Approver: ${appData.itHeadName || 'Swastik Paul (IT Operations Head)'}</div>
+              <div><strong>Technical Clearance:</strong> VERIFIED & CLEARED FOR R&D</div>
+              <div><strong>Clearance Date:</strong> ${appData.itApprovedAt ? new Date(appData.itApprovedAt).toLocaleString() : new Date().toLocaleString()}</div>
+              ${appData.itSignatureDataUrl ? `<div style="margin-top: 10px;"><strong>IT Operations E-Signature:</strong><br/><img src="${appData.itSignatureDataUrl}" style="max-height: 48px; background: #fff; padding: 4px; border-radius: 4px; margin-top: 4px;"/></div>` : ''}
+            </div>
+          ` : ''}
+        </div>
+      `;
+
+      return { doc, blob, blobUrl, dataUrl, htmlContent };
     }
 
     // HTML / SVG Fallback Generator (If jsPDF library CDN is delayed)
