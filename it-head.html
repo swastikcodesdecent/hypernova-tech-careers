@@ -49,6 +49,10 @@
           <svg class="svg-icon" viewBox="0 0 24 24"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"></path><path d="M13.73 21a2 2 0 0 1-3.46 0"></path></svg>
           <span>Issue Notice</span>
         </div>
+        <div class="nav-item" data-tab="tab-it-applications">
+          <svg class="svg-icon" viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line></svg>
+          <span>Applications Desk</span>
+        </div>
         <div class="nav-item" data-tab="tab-it-account">
           <svg class="svg-icon" viewBox="0 0 24 24"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>
           <span>Account</span>
@@ -518,7 +522,141 @@
         </div>
       </section>
 
+      <!-- TAB: CANDIDATE APPLICATIONS DESK (IT ADMIN ACCESS) -->
+      <section class="tab-content" id="tab-it-applications">
+        <div class="glass-card" style="margin-bottom: 1.5rem;">
+          <div class="flex justify-between items-center" style="flex-wrap: wrap; gap: 1rem;">
+            <div>
+              <h3 style="margin: 0; color: #ffffff;">Candidate Applications & Submissions Desk</h3>
+              <p style="font-size: 0.85rem; color: var(--text-muted); margin: 0.25rem 0 0 0;">Read-only administrative inspection desk for all collaborator & volunteer application records and generated PDFs.</p>
+            </div>
+            <span class="badge badge-approved">IT Admin Audit Access</span>
+          </div>
+
+          <!-- Application Metrics Counters Grid -->
+          <div class="grid grid-cols-4 gap-4" style="margin-top: 1.5rem;">
+            <div style="background: rgba(15, 23, 42, 0.7); padding: 1rem; border-radius: var(--radius-md); border: 1px solid var(--border-glass); text-align: center;">
+              <div style="font-size: 0.75rem; color: var(--text-muted); text-transform: uppercase; font-family: var(--font-mono);">Total Applications</div>
+              <div style="font-size: 1.6rem; font-weight: 800; color: #ffffff; margin-top: 0.25rem;" id="it-count-total-apps">0</div>
+            </div>
+            <div style="background: rgba(15, 23, 42, 0.7); padding: 1rem; border-radius: var(--radius-md); border: 1px solid var(--border-glass); text-align: center;">
+              <div style="font-size: 0.75rem; color: var(--warning); text-transform: uppercase; font-family: var(--font-mono);">Pending CEO Review</div>
+              <div style="font-size: 1.6rem; font-weight: 800; color: var(--warning); margin-top: 0.25rem;" id="it-count-pending-apps">0</div>
+            </div>
+            <div style="background: rgba(15, 23, 42, 0.7); padding: 1rem; border-radius: var(--radius-md); border: 1px solid var(--border-glass); text-align: center;">
+              <div style="font-size: 0.75rem; color: #22c55e; text-transform: uppercase; font-family: var(--font-mono);">Approved Members</div>
+              <div style="font-size: 1.6rem; font-weight: 800; color: #22c55e; margin-top: 0.25rem;" id="it-count-approved-apps">0</div>
+            </div>
+            <div style="background: rgba(15, 23, 42, 0.7); padding: 1rem; border-radius: var(--radius-md); border: 1px solid var(--border-glass); text-align: center;">
+              <div style="font-size: 0.75rem; color: var(--accent-cyan); text-transform: uppercase; font-family: var(--font-mono);">Volunteer Applications</div>
+              <div style="font-size: 1.6rem; font-weight: 800; color: var(--accent-cyan); margin-top: 0.25rem;" id="it-count-volunteer-apps">0</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Filter & Table Card -->
+        <div class="glass-card">
+          <div class="flex justify-between items-center" style="margin-bottom: 1.25rem; flex-wrap: wrap; gap: 1rem;">
+            <div style="flex: 1; min-width: 240px;">
+              <input type="text" class="form-control" id="it-search-apps" placeholder="Search by candidate name, email, or App ID...">
+            </div>
+            <div class="flex gap-2" style="flex-wrap: wrap;">
+              <select class="form-control" id="it-filter-app-role" style="width: auto;">
+                <option value="all">All Roles</option>
+                <option value="volunteer_collaborator">Volunteer Collaborator</option>
+                <option value="collaborator">Collaborator</option>
+              </select>
+              <select class="form-control" id="it-filter-app-status" style="width: auto;">
+                <option value="all">All Statuses</option>
+                <option value="pending_ceo_review">Pending CEO Review</option>
+                <option value="approved">Approved</option>
+                <option value="rejected">Rejected</option>
+                <option value="draft">Draft</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="table-responsive">
+            <table class="data-table">
+              <thead>
+                <tr>
+                  <th>App ID</th>
+                  <th>Candidate Name & Email</th>
+                  <th>Role</th>
+                  <th>Submitted Date</th>
+                  <th>Executive Status</th>
+                  <th>Actions</th>
+                </tr>
+              </thead>
+              <tbody id="it-applications-tbody">
+                <!-- Dynamically populated -->
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </section>
+
     </main>
+  </div>
+
+  <!-- IT Admin Application Inspector Modal -->
+  <div class="modal" id="modal-it-app-inspector">
+    <div class="modal-overlay" onclick="closeModal('modal-it-app-inspector')"></div>
+    <div class="modal-card" style="max-width: 920px; max-height: 90vh; overflow-y: auto;">
+      <div class="modal-header">
+        <div>
+          <h3 id="it-insp-app-title" style="margin:0;">Inspect Candidate Application</h3>
+          <p style="font-size: 0.85rem; color: var(--text-muted); margin: 0.2rem 0 0 0;">IT Administrative read-only profile inspection & PDF viewer</p>
+        </div>
+        <button class="modal-close-btn" onclick="closeModal('modal-it-app-inspector')">&times;</button>
+      </div>
+
+      <div class="modal-body flex flex-col gap-4" style="margin-top: 1rem;">
+        <!-- Candidate Overview Grid -->
+        <div class="grid grid-cols-2 gap-4">
+          <div style="background: rgba(15, 23, 42, 0.7); padding: 1rem; border-radius: var(--radius-md); border: 1px solid var(--border-glass);" class="flex flex-col gap-2">
+            <h4 style="margin: 0; color: var(--accent-cyan); font-size: 0.95rem;">Personal Profile</h4>
+            <div><strong>Candidate Name:</strong> <span id="it-insp-name">N/A</span></div>
+            <div><strong>Email Address:</strong> <span id="it-insp-email">N/A</span></div>
+            <div><strong>Phone Number:</strong> <span id="it-insp-phone">N/A</span></div>
+            <div><strong>Location / City:</strong> <span id="it-insp-location">N/A</span></div>
+          </div>
+
+          <div style="background: rgba(15, 23, 42, 0.7); padding: 1rem; border-radius: var(--radius-md); border: 1px solid var(--border-glass);" class="flex flex-col gap-2">
+            <h4 style="margin: 0; color: var(--accent-cyan); font-size: 0.95rem;">Technical Profile & Credentials</h4>
+            <div><strong>GitHub:</strong> <a href="#" id="it-insp-github" target="_blank" style="color: var(--accent-cyan);">N/A</a></div>
+            <div><strong>LinkedIn:</strong> <a href="#" id="it-insp-linkedin" target="_blank" style="color: var(--accent-cyan);">N/A</a></div>
+            <div><strong>Resume Link:</strong> <a href="#" id="it-insp-resume" target="_blank" style="color: var(--accent-cyan);">N/A</a></div>
+            <div><strong>Tech Stack:</strong> <span id="it-insp-techstack">None Selected</span></div>
+          </div>
+        </div>
+
+        <!-- Projects & Department Details -->
+        <div style="background: rgba(15, 23, 42, 0.7); padding: 1rem; border-radius: var(--radius-md); border: 1px solid var(--border-glass);" class="flex flex-col gap-2">
+          <h4 style="margin: 0; color: var(--accent-cyan); font-size: 0.95rem;">Relevant Projects & Department Preference</h4>
+          <div><strong>Projects / Exp:</strong> <div id="it-insp-projects" style="color: var(--text-muted); font-size: 0.85rem; margin-top: 0.2rem;">N/A</div></div>
+          <div id="it-insp-dept-sec" style="display:none; margin-top: 0.5rem; border-top: 1px solid var(--border-glass); padding-top: 0.5rem;">
+            <div><strong>Primary Department Preference:</strong> <span id="it-insp-primary-dept">N/A</span></div>
+            <div><strong>Department Opting Rationale:</strong> <div id="it-insp-dept-reason" style="font-style: italic; color: var(--text-muted); margin-top: 0.2rem;">N/A</div></div>
+          </div>
+        </div>
+
+        <!-- Generated PDF Viewer Frame -->
+        <div style="background: rgba(15, 23, 42, 0.7); padding: 1rem; border-radius: var(--radius-md); border: 1px solid var(--border-glass);">
+          <div class="flex justify-between items-center" style="margin-bottom: 0.75rem; flex-wrap: wrap; gap: 0.5rem;">
+            <h4 style="margin: 0; color: #ffffff; font-size: 0.95rem;">Application PDF Document Preview</h4>
+            <button type="button" class="btn btn-primary btn-sm" id="btn-it-insp-download-pdf">Download PDF Document</button>
+          </div>
+          <div class="pdf-preview-box">
+            <iframe id="it-insp-pdf-iframe" title="Candidate Application PDF Document" style="width:100%; height:400px; border:none; border-radius:var(--radius-md);"></iframe>
+          </div>
+        </div>
+      </div>
+
+      <div class="modal-footer flex justify-end" style="margin-top: 1rem;">
+        <button type="button" class="btn btn-secondary" onclick="closeModal('modal-it-app-inspector')">Close Inspector</button>
+      </div>
+    </div>
   </div>
 
   <!-- MODAL: MANAGE TICKET DETAIL (INSPECTOR) -->
@@ -562,6 +700,7 @@
   <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-auth-compat.js"></script>
   <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore-compat.js"></script>
   <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-storage-compat.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
 
   <!-- Core App Scripts -->
   <script src="assets/js/firebase-config.js"></script>
@@ -571,6 +710,8 @@
   <script src="assets/js/audit.js"></script>
   <script src="assets/js/support.js"></script>
   <script src="assets/js/auth.js"></script>
+  <script src="assets/js/tnc-content.js"></script>
+  <script src="assets/js/pdf-gen.js"></script>
   <script src="assets/js/maintenance.js"></script>
   <script src="assets/js/it-head.js"></script>
 </body>
