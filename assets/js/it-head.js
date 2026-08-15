@@ -417,28 +417,45 @@ function renderITApplicationsTable() {
   });
 
   if (filtered.length === 0) {
-    tbody.innerHTML = `<tr><td colspan="6" style="text-align:center; color:var(--text-dim); padding:2rem;">No matching candidate applications found.</td></tr>`;
+    tbody.innerHTML = `<tr><td colspan="6" style="text-align:center; color:var(--text-dim); padding:2.5rem 1rem;">No matching candidate applications found.</td></tr>`;
     return;
   }
 
   tbody.innerHTML = filtered.map(a => {
     let badgeClass = 'badge-draft';
-    if (a.status === 'pending_ceo_review') badgeClass = 'badge-pending';
-    if (a.status === 'approved') badgeClass = 'badge-approved';
-    if (a.status === 'rejected') badgeClass = 'badge-rejected';
+    let statusText = (a.status || 'draft').replace(/_/g, ' ').toUpperCase();
+
+    if (a.status === 'pending_ceo_review') {
+      badgeClass = 'badge-pending';
+      statusText = 'PENDING CEO';
+    } else if (a.status === 'needs_information') {
+      badgeClass = 'badge-needs-info';
+      statusText = 'NEEDS INFO';
+    } else if (a.status === 'approved') {
+      badgeClass = 'badge-approved';
+      statusText = 'APPROVED';
+    } else if (a.status === 'rejected') {
+      badgeClass = 'badge-rejected';
+      statusText = 'REJECTED';
+    } else if (a.status === 'draft' || !a.submittedAt) {
+      badgeClass = 'badge-draft';
+      statusText = 'DRAFT';
+    }
+
+    const roleTitle = a.applicantType === 'volunteer_collaborator' ? 'VOLUNTEER' : 'COLLABORATOR';
 
     return `
-      <tr>
-        <td><strong>${a.appId || 'HN-2026-XXXX'}</strong></td>
-        <td>
-          <div style="font-weight:600; color:#fff;">${a.fullName || a.applicantEmail}</div>
-          <div style="font-size:0.8rem; color:var(--text-muted);">${a.applicantEmail || a.email}</div>
+      <tr style="border-bottom: 1px solid rgba(255, 255, 255, 0.05); transition: background 0.2s ease;">
+        <td style="padding: 1rem;"><strong style="font-family: var(--font-mono); color: var(--accent-cyan); font-size: 0.9rem;">${a.appId || 'HN-2026-XXXX'}</strong></td>
+        <td style="padding: 1rem;">
+          <div style="font-weight: 700; color: #ffffff; font-size: 0.95rem;">${a.fullName || a.applicantEmail}</div>
+          <div style="font-size: 0.8rem; color: var(--text-muted); margin-top: 0.15rem;">${a.applicantEmail || a.email}</div>
         </td>
-        <td><span class="badge badge-role">${a.applicantType === 'volunteer_collaborator' ? 'Volunteer' : 'Collaborator'}</span></td>
-        <td>${a.submittedAt ? new Date(a.submittedAt).toLocaleDateString() : 'Draft / Unsubmitted'}</td>
-        <td><span class="badge ${badgeClass}">${(a.status || 'draft').replace('_', ' ')}</span></td>
-        <td>
-          <button class="btn btn-secondary btn-sm" onclick="openITAppInspector('${a.id}')">Inspect & PDF</button>
+        <td style="padding: 1rem;"><span class="badge badge-role" style="font-size: 0.7rem; padding: 0.25rem 0.65rem;">${roleTitle}</span></td>
+        <td style="padding: 1rem; font-size: 0.85rem; color: var(--text-muted);">${a.submittedAt ? new Date(a.submittedAt).toLocaleDateString() : 'Draft / Unsubmitted'}</td>
+        <td style="padding: 1rem;"><span class="badge ${badgeClass}" style="font-size: 0.7rem; padding: 0.25rem 0.65rem;">${statusText}</span></td>
+        <td style="padding: 1rem; text-align: center;">
+          <button class="btn btn-secondary btn-sm" style="padding: 0.4rem 0.75rem; font-size: 0.8rem;" onclick="openITAppInspector('${a.id}')">Inspect & PDF</button>
         </td>
       </tr>
     `;
