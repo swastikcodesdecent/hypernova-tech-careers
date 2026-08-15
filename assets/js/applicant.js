@@ -495,10 +495,10 @@ function renderPDFPreview(app, iframeId) {
   try {
     const pdfRes = pdfGen.generatePDF(app);
     if (pdfRes) {
-      if (pdfRes.dataUrl) {
-        iframe.src = pdfRes.dataUrl;
-      } else if (pdfRes.blobUrl) {
-        iframe.src = pdfRes.blobUrl;
+      if (pdfRes.htmlContent) {
+        iframe.srcdoc = pdfRes.htmlContent;
+      } else {
+        iframe.src = pdfRes.blobUrl || pdfRes.dataUrl;
       }
     }
   } catch (err) {
