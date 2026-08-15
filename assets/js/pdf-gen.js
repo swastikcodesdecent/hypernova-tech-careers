@@ -368,6 +368,52 @@ class ApplicationPDFGenerator {
       }
 
       // ====================================================
+      // 5. IT TECHNICAL CLEARANCE & E-SIGNATURE VERIFICATION
+      // ====================================================
+      if (appData.itSignatureDataUrl || appData.itApprovedAt) {
+        checkPageBreak(42);
+        y += 6;
+        doc.setFontSize(12);
+        doc.setFont('helvetica', 'bold');
+        doc.setTextColor(14, 165, 233);
+        doc.text('5. IT TECHNICAL CLEARANCE & E-SIGNATURE VERIFICATION', margin, y);
+        doc.setDrawColor(14, 165, 233);
+        doc.setLineWidth(0.4);
+        doc.line(margin, y + 2, pageWidth - margin, y + 2);
+        y += 8;
+
+        checkPageBreak(36);
+        doc.setFillColor(240, 249, 255);
+        doc.setDrawColor(186, 230, 253);
+        doc.rect(margin, y, contentWidth, 32, 'DF');
+
+        doc.setFontSize(8.5);
+        doc.setFont('helvetica', 'bold');
+        doc.setTextColor(3, 105, 161);
+        doc.text(`IT Operations Approver: ${appData.itHeadName || 'Swastik Paul (IT Operations Head)'}`, margin + 4, y + 7);
+        doc.text(`Technical Status: VERIFIED & CLEARED FOR R&D`, margin + 4, y + 14);
+        doc.text(`Clearance Timestamp: ${appData.itApprovedAt ? new Date(appData.itApprovedAt).toLocaleString() : new Date().toLocaleString()}`, margin + 4, y + 21);
+
+        doc.setFont('helvetica', 'bold');
+        doc.setTextColor(3, 105, 161);
+        doc.text('IT Head E-Signature:', margin + 110, y + 7);
+
+        if (appData.itSignatureDataUrl) {
+          try {
+            doc.addImage(appData.itSignatureDataUrl, 'PNG', margin + 110, y + 9, 52, 18);
+          } catch (e) {
+            doc.setFont('helvetica', 'italic');
+            doc.text('[IT Head E-Signed]', margin + 110, y + 16);
+          }
+        } else {
+          doc.setFont('helvetica', 'italic');
+          doc.text('[IT Head E-Signed]', margin + 110, y + 16);
+        }
+
+        y += 40;
+      }
+
+      // ====================================================
       // 5. STAMP APPLICANT & CEO SIGNATURES ON ALL PAGES
       // ====================================================
       const totalPages = doc.getNumberOfPages();
