@@ -600,13 +600,12 @@
   </div>
 
   <!-- IT Admin Application Inspector Modal -->
-  <div class="modal" id="modal-it-app-inspector">
-    <div class="modal-overlay" onclick="closeModal('modal-it-app-inspector')"></div>
-    <div class="modal-card" style="max-width: 920px; max-height: 90vh; overflow-y: auto;">
+  <div class="modal-overlay" id="modal-it-app-inspector">
+    <div class="modal-card" style="max-width: 900px; width: 92%; max-height: 90vh; overflow-y: auto;">
       <div class="modal-header">
         <div>
           <h3 id="it-insp-app-title" style="margin:0;">Inspect Candidate Application</h3>
-          <p style="font-size: 0.85rem; color: var(--text-muted); margin: 0.2rem 0 0 0;">IT Administrative read-only profile inspection & PDF viewer</p>
+          <p style="font-size: 0.85rem; color: var(--text-muted); margin: 0.2rem 0 0 0;">IT Administrative profile inspection, E-Signature clearance & PDF viewer</p>
         </div>
         <button class="modal-close-btn" onclick="closeModal('modal-it-app-inspector')">&times;</button>
       </div>
@@ -638,6 +637,23 @@
           <div id="it-insp-dept-sec" style="display:none; margin-top: 0.5rem; border-top: 1px solid var(--border-glass); padding-top: 0.5rem;">
             <div><strong>Primary Department Preference:</strong> <span id="it-insp-primary-dept">N/A</span></div>
             <div><strong>Department Opting Rationale:</strong> <div id="it-insp-dept-reason" style="font-style: italic; color: var(--text-muted); margin-top: 0.2rem;">N/A</div></div>
+          </div>
+        </div>
+
+        <!-- IT Admin Technical E-Signature & Clearance Box -->
+        <div style="background: rgba(15, 23, 42, 0.7); padding: 1rem; border-radius: var(--radius-md); border: 1px solid var(--border-glass);">
+          <div class="flex justify-between items-center" style="margin-bottom: 0.5rem;">
+            <h4 style="margin: 0; color: var(--accent-cyan); font-size: 0.95rem;">IT Admin Technical Clearance & E-Signature</h4>
+            <span class="badge badge-approved" id="it-sig-status-badge">IT Operations Sign-off</span>
+          </div>
+          <p style="font-size: 0.8rem; color: var(--text-muted); margin-bottom: 0.75rem;">Draw official IT Operations E-Signature below to execute technical clearance stamp on candidate PDF.</p>
+          
+          <div class="signature-container" style="border: 1px solid var(--accent-cyan); border-radius: var(--radius-sm); overflow: hidden; background: #0b101c; margin-bottom: 0.5rem;">
+            <canvas id="canvas-it-signature" height="120" style="width: 100%; cursor: crosshair; touch-action: none; display: block;"></canvas>
+          </div>
+          <div class="flex justify-between items-center">
+            <button type="button" class="btn btn-secondary btn-sm" id="btn-clear-it-sig" style="padding: 0.25rem 0.6rem; font-size: 0.75rem;">Clear Signature</button>
+            <button type="button" class="btn btn-success btn-sm" id="btn-save-it-clearance" style="padding: 0.4rem 0.85rem; font-size: 0.85rem;">Save IT Clearance & E-Sign PDF</button>
           </div>
         </div>
 
