@@ -219,8 +219,8 @@ async function loadApplicantData(user) {
 
   // Determine starting flow pane
   if (app.status === 'approved') {
-    // Restricted to application until approved; once approved, redirect to Members Portal (coming soon)
-    window.location.href = 'coming-soon.html';
+    // Restricted to application until approved; once approved, redirect to Members Portal
+    window.location.href = 'member.html';
     return;
     // Once accepted by CEO, hide onboarding stepper and application PDF links/views
     const navOnboarding = document.getElementById('nav-onboarding-link');
